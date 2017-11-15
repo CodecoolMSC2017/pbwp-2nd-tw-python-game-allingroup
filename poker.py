@@ -112,11 +112,9 @@ def pair(hand):
     pair_is = False
     while i < N - 1:
         if mypairrev[i] == mypairrev[i+1]:
-            
             pair_is = True
             break
         else:
-            
             pair_is = False
         i = i + 1
     return pair_is
