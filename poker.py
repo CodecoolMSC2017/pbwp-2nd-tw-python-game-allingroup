@@ -327,7 +327,7 @@ def game():
     # get the highest combo value
     guestcombores = combos[guestcomboresult[0]]
     pccombores = combos[pccomboresult[0]]
-
+    #print("guestcombores: " + str(guestcombores) + " guestcomboresult[1]: " + str(guestcomboresult[1]))
     
     # sum of combovalue and highest card value from the combo
     guestval = guestcombores + guestcomboresult[1]
