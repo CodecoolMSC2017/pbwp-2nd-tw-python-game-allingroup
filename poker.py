@@ -68,7 +68,10 @@ def clrscr():
 
 #change cards if user wants
 def changecards(change):
-    change = len(change) if change >= 1
+    if change >= '1':
+        change = len(change)
+    else:
+        pass
     newcards = newhand(change)
     return newcards
     
@@ -176,10 +179,11 @@ def makesimple(cl):
     return s
 
 def change(guesthand):
-    change = input("type here the number(s) of the card(s) you want to change: (max 3 cards)\n")
+    msg = "type here the number(s) of the card(s) you want to change: (max 3 cards)\n"
+    change = input(msg)
     if len(change) > 3 and len(change) < 5:
         print("try again with a number between 1 and 3")
-        change = input("type here the number(s) of the card(s) you want to change: (max change 3 cards)\n")
+        change = input(msg)
     else:
         newcards = changecards(change)
         current = 1
@@ -201,6 +205,10 @@ def game():
     print(poker)
     guesthand = newhand(5)
     pchand = newhand(5)
+    
+    #make string from cards list
+    gh = makesimple(guesthand)
+    ph = makesimple(pchand)
 
     print("your cards are:\n")
     print(gh)
