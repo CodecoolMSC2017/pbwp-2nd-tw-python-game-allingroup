@@ -86,22 +86,25 @@ def getcardval(hand):
         c += 1
     return cards
 
-#check if straight in the hand
 def straight(hand):
     maxcard = max(hand)
     mincard = min(hand)
     handlen = len(hand)
+    high_is = []
     if int(maxcard) - int(mincard) == 4 and handlen == 5:
-        return True
+        high_is = [True, maxcard]
     else:
-        return False
+        high_is = [False, 0]
+    return high_is
 
 #check if high card
 def high(hand):
+    
     if int(hand[4]) > 10:
-        return True
+
+        return [True, hand[4]]
     else:
-        return False
+        return [False, 0]
 
 #check if there is a pair
 def pair(hand):
@@ -109,26 +112,61 @@ def pair(hand):
     N = len(hand)
     mypairrev = hand[::-1]
     
-    pair_is = False
+   
+    high_incombo = 0
     while i < N - 1:
         if mypairrev[i] == mypairrev[i+1]:
+            high_incombo = mypairrev[i]
             pair_is = True
             break
         else:
+            
             pair_is = False
         i = i + 1
-    return pair_is
-
+    return [pair_is, high_incombo]
 #check if there is a drill
 def drill(hand):
+    
+ 
     j = 0
     N = len(hand)
+    drill_is = []
     while j < N - 2:
+        
         if hand[j] == hand[j+1] and hand[j+1] == hand[j+2]:
-            return True
+            drill_is = [True, hand[j]]
         else:
-            return False
+            drill_is = [False, 0]
         j = j + 1
+    return drill_is
+
+
+
+
+
+
+def analyze(hand):
+    hand.sort()
+    res = 0
+    
+    straight_true = straight(hand)
+    pair_true = pair(hand)
+    drill_true = drill(hand)
+    high_true = high(hand)
+    if straight_true[0]:
+        res = [ "straight", straight_true[1]] 
+    elif drill_true[0]:
+        res = ["drill", drill_true[1]]
+    elif pair_true[0]:
+        res = ["pair", pair_true[1]]
+    elif high_true[0]:
+        res = ["high", high_true[1]]
+    else:
+        res = ["nocombo", 0]
+
+    return res
+
+
 
 #check the results
 def rating(g,p,gcn,pcn):
@@ -142,23 +180,6 @@ def rating(g,p,gcn,pcn):
     else:
         winner = "The computer win with: " + pcn + "!"
     return winner
-
-#analyzing the cards to get the winner
-def analyze(hand):
-    res = 0
-
-    if straight(hand):
-        res = "straight"
-    elif drill(hand):
-        res = "drill"
-    elif pair(hand):
-        res = "pair"
-    elif high(hand):
-        res = "high"
-    else:
-        res = "nocombo"
-
-    return res
 
 def result():
     clrscr()
