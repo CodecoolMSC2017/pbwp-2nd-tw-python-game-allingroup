@@ -201,11 +201,6 @@ def game():
     print(poker)
     guesthand = newhand(5)
     pchand = newhand(5)
-    guestcardval = getcardval(guesthand)
-    pccardval = getcardval(pchand)
-
-    gh = makesimple(guesthand)
-    ph = makesimple(pchand)
 
     print("your cards are:\n")
     print(gh)
@@ -215,13 +210,21 @@ def game():
     if option == "y":
         clrscr()
         guesthand = change(guesthand)
+
+    #make string from cards list
+    gh = makesimple(guesthand)
+    ph = makesimple(pchand)
+
     clrscr()
     print(poker)
     print("now, your cards are:\n")
-    print(makesimple(gh) + "\n")
+    print(gh + "\n")
     
     print("and the computers cards are:\n")
     print(ph)
+
+    guestcardval = getcardval(guesthand)
+    pccardval = getcardval(pchand)
 
     #get the highest combo name
     guestcomboname = analyze(guestcardval)
