@@ -104,46 +104,86 @@ def straight(hand):
 
 
 # check if high card
+def straight(hand):
+    maxcard = max(hand)
+    mincard = min(hand)
+    handlen = len(hand)
+    high_is = []
+    if int(maxcard) - int(mincard) == 4 and handlen == 5:
+        high_is = [True, maxcard]
+    else:
+        high_is = [False, 0]
+    return high_is
+
+
+def four_of_kind(hand):
+   
+    j = 0
+    N = len(hand)
+    four_is = []
+    
+    while j < N - 3:
+        
+        if hand[j] == hand[j+1] and hand[j+1] == hand[j+2] and hand[j+2] == hand[j+3]:
+            four_is = [True, hand[j]]
+            
+            break
+        else:
+            four_is = [False, 0]
+        j = j + 1
+    
+    return four_is
+    
+
+#check if high card
 def high(hand):
+    
     if int(hand[4]) > 10:
+
         return [True, hand[4]]
     else:
         return [False, 0]
 
-
-# check if there is a pair
+#check if there is a pair
 def pair(hand):
     i = 0
     N = len(hand)
     mypairrev = hand[::-1]
+    
+   
     high_incombo = 0
     while i < N - 1:
         if mypairrev[i] == mypairrev[i+1]:
             high_incombo = mypairrev[i]
             pair_is = True
             break
-        else:            
+        else:
+            
             pair_is = False
         i = i + 1
     return [pair_is, high_incombo]
-
-
-# check if there is a drill
+#check if there is a drill
 def drill(hand):
+    print(hand)
     j = 0
     N = len(hand)
     drill_is = []
     while j < N - 2:
         if hand[j] == hand[j+1] and hand[j+1] == hand[j+2]:
             drill_is = [True, hand[j]]
+            print(drill_is)
+            break
         else:
             drill_is = [False, 0]
         j = j + 1
+    print(drill_is)
     return drill_is
 
 
-# check combos in hand
-# return comboname and highest card value from combo
+
+
+
+
 def analyze(hand):
     hand.sort()
     res = 0
@@ -152,9 +192,11 @@ def analyze(hand):
     pair_true = pair(hand)
     drill_true = drill(hand)
     high_true = high(hand)
-
+    four_true = four_of_kind(hand)
     if straight_true[0]:
-        res = [ "straight", straight_true[1]] 
+        res = ["straight", straight_true[1]] 
+    elif four_true[0]:
+        res = ["four of a kind", four_true[1]]
     elif drill_true[0]:
         res = ["drill", drill_true[1]]
     elif pair_true[0]:
@@ -163,7 +205,7 @@ def analyze(hand):
         res = ["high", high_true[1]]
     else:
         res = ["nocombo", 0]
-
+    
     return res
 
 
