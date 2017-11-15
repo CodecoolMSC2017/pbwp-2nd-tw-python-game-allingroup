@@ -241,15 +241,15 @@ def game():
     #get the highest combo name
     #analyze return list what contains the comboname
     #and the highest card value from the combo
-    guestcomboname = analyze(guestcardval)
-    pccomboname = analyze(pccardval)
+    guestcomboresult = analyze(guestcardval)
+    pccomboresult = analyze(pccardval)
     
     #get the highest combo value
-    guestcombores = combos[guestcomboname]
-    pccombores = combos[pccomboname]
+    guestcombores = combos[guestcomboresult[0]]
+    pccombores = combos[pccomboresult[0]]
 
-    guestval = int(guestcombores)
-    pcval = int(pccombores)
+    guestval = int(guestcombores) + guestcomboresult[1]
+    pcval = int(pccombores) + guestcomboresult[1]
 
     """for i in range(len(guesthand)):
         guestval += int(guestcardval[i])
