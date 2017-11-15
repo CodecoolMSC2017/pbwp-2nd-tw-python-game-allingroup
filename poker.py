@@ -108,13 +108,18 @@ def pair(hand):
     i = 0
     N = len(hand)
     mypairrev = hand[::-1]
+    
+    pair_is = False
     while i < N - 1:
         if mypairrev[i] == mypairrev[i+1]:
-            return True
+            
+            pair_is = True
             break
         else:
-            return False
+            
+            pair_is = False
         i = i + 1
+    return pair_is
 
 #check if there is a drill
 def drill(hand):
