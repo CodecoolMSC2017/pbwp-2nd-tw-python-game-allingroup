@@ -99,9 +99,7 @@ def straight(hand):
 
 #check if high card
 def high(hand):
-    
     if int(hand[4]) > 10:
-
         return [True, hand[4]]
     else:
         return [False, 0]
@@ -111,28 +109,23 @@ def pair(hand):
     i = 0
     N = len(hand)
     mypairrev = hand[::-1]
-    
-   
     high_incombo = 0
     while i < N - 1:
         if mypairrev[i] == mypairrev[i+1]:
             high_incombo = mypairrev[i]
             pair_is = True
             break
-        else:
-            
+        else:            
             pair_is = False
         i = i + 1
     return [pair_is, high_incombo]
+
 #check if there is a drill
 def drill(hand):
-    
- 
     j = 0
     N = len(hand)
     drill_is = []
     while j < N - 2:
-        
         if hand[j] == hand[j+1] and hand[j+1] == hand[j+2]:
             drill_is = [True, hand[j]]
         else:
@@ -141,10 +134,8 @@ def drill(hand):
     return drill_is
 
 
-
-
-
-
+# check combos in hand
+# return comboname and highest card value from combo
 def analyze(hand):
     hand.sort()
     res = 0
@@ -165,7 +156,6 @@ def analyze(hand):
         res = ["nocombo", 0]
 
     return res
-
 
 
 # check the results
@@ -197,11 +187,11 @@ def result():
         if back == "b":
             main()
 
-def makesimple(cl):
-    s = ""
-    for c in cl:
-        s += " " + str(c)
-    return s
+def makesimple(cardlist):
+    string = ""
+    for card in cardlist:
+        string += " " + str(card)
+    return string
 
 def change(guesthand):
     msg = "type here the number(s) of the card(s) you want to change: (max 3 cards)\n"
