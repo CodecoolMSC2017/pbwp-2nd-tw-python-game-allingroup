@@ -164,19 +164,19 @@ def pair(hand):
     return [pair_is, high_incombo]
 #check if there is a drill
 def drill(hand):
-    print(hand)
+    
     j = 0
     N = len(hand)
     drill_is = []
     while j < N - 2:
         if hand[j] == hand[j+1] and hand[j+1] == hand[j+2]:
             drill_is = [True, hand[j]]
-            print(drill_is)
+            
             break
         else:
             drill_is = [False, 0]
         j = j + 1
-    print(drill_is)
+    
     return drill_is
 
 
