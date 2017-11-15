@@ -246,17 +246,17 @@ def game():
     pccombores = combos[pccomboname]
 
     guestval = int(guestcombores)
-    h = 0
-    while h < len(guesthand):
-        guestval += int(guestcardval[h])
-        h += 1
-
     pcval = int(pccombores)
-    h = 0
-    while h < len(pchand):
-        pcval += int(pccardval[h])
-        h += 1
 
+    """for i in range(len(guesthand)):
+        guestval += int(guestcardval[i])
+
+    
+    for i in range(len(pchand)):
+        pcval += int(pccardval[i])"""
+
+    #print("guestval: " + str(guestval) + "\npcval: " + str(pcval))
+    #print("guestcomboname: " + guestcomboname + "\npccomboname: " + pccomboname)
     winner = rating(guestval,pcval,guestcomboname,pccomboname)
     writeresults(guestval,winner)
 
