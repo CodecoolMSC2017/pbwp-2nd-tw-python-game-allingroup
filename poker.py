@@ -144,6 +144,7 @@ def analyze(hand):
     pair_true = pair(hand)
     drill_true = drill(hand)
     high_true = high(hand)
+
     if straight_true[0]:
         res = [ "straight", straight_true[1]] 
     elif drill_true[0]:
@@ -171,7 +172,14 @@ def rating(g,p,gcn,pcn):
         winner = "The computer win with: " + pcn + "!"
     return winner
 
+
+# check result.txt
+# make new if not found
+# open it and print last 5 result if found
 def result():
+    msg = "Press 'b' to go back to main menu!\n"
+    noresmsg = "Play with our poker and you will se your results here"
+    
     clrscr()
     print(poker)
     with open("result.txt") as results:
@@ -182,10 +190,12 @@ def result():
             for i in range(contentnum):
                 print(content[i])
         else:
-            print("No results")
-        back = input("Press b to go back:\n")
-        if back == "b":
+            print(noresmsg)
+        userinput = input(msg)
+        if userinput == "b":
             main()
+        else:
+            print(msg)
 
 def makesimple(cardlist):
     string = ""
@@ -194,10 +204,12 @@ def makesimple(cardlist):
     return string
 
 def change(guesthand):
-    msg = "type here the number(s) of the card(s) you want to change: (max 3 cards)\n"
+    msg = "Type here the number(s) of the card(s) you want to change: (max 3 cards)\n"
+    notgoodnummsg = "Try again with a number between 1 and 3"
+    
     change = input(msg)
     if len(change) > 3 and len(change) < 5:
-        print("try again with a number between 1 and 3")
+        print(notgoodmsg)
         change = input(msg)
     else:
         newcards = changecards(change)
@@ -215,7 +227,7 @@ def writeresults(guestval,winner):
         f.write(str(guestval) +"|" + str(now) +"|" + str(winner)+"\n")
 
 
-# get the hands, analyze and says who the winner
+# get the hands, analyze and says who's the winner
 def game():
     clrscr()
     print(poker)
@@ -260,18 +272,11 @@ def game():
     guestcombores = combos[guestcomboresult[0]]
     pccombores = combos[pccomboresult[0]]
 
-    guestval = str(guestcombores) + guestcomboresult[1]
-    pcval = str(pccombores) + guestcomboresult[1]
+    # sum of combovalue and highest card value from the combo
+    guestval = guestcombores + guestcomboresult[1]
+    pcval = pccombores + guestcomboresult[1]
 
-    """for i in range(len(guesthand)):
-        guestval += int(guestcardval[i])
-
-    
-    for i in range(len(pchand)):
-        pcval += int(pccardval[i])"""
-
-    #print("guestval: " + str(guestval) + "\npcval: " + str(pcval))
-    #print("guestcomboname: " + guestcomboname + "\npccomboname: " + pccomboname)
+    # get the winner name
     winner = rating(guestval,pcval,guestcomboresult[0],pccomboresult[0])
     writeresults(guestval,winner)
 
@@ -282,6 +287,7 @@ def main():
     clrscr()
     print(poker)
     print(left_side)
+    
     keys = input("|Press s to start,                    |\n|r for result,                        |\n|q to quit                            |\n---------------------------------------\n")
     if keys == "s":
         game()
@@ -292,4 +298,5 @@ def main():
     else:
         print("Please enter s, r or q")
 
-main()
+if __name__ == "__main__":
+    main()
