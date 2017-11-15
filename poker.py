@@ -12,7 +12,8 @@ combos = {
 	'high': '1',
     'pair': '2',
     'drill': '3',
-    'straight': '4',
+    'four of a kind': '4',
+    'straight': '5',
     'nocombo': '0'
 }
 
@@ -77,7 +78,7 @@ def changecards(change):
         pass
     newcards = newhand(change)
     return newcards
-    
+
 
 # get card from list by its num
 def getcardval(hand):
