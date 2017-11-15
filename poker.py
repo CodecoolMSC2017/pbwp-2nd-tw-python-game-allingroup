@@ -13,24 +13,24 @@ combos = {
     'pair': '2',
     'drill': '3',
     'straight': '4',
-    'nocombo':'0'
+    'nocombo': '0'
 }
 
 #value of the cards
 cardvals = {
-    '2':'2',
-    '3':'3',
-    '4':'4',
-    '5':'5',
-    '6':'6',
-    '7':'7',
-    '8':'8',
-    '9':'9',
-    '10':'10',
-    'J':'11',
-    'Q':'12',
-    'K':'13',
-    'A':'14'
+    '2': '2',
+    '3': '3',
+    '4': '4',
+    '5': '5',
+    '6': '6',
+    '7': '7',
+    '8': '8',
+    '9': '9',
+    '10': '10',
+    'J': '11',
+    'Q': '12',
+    'K': '13',
+    'A': '14'
 }
 
 # pack of cards
@@ -130,7 +130,7 @@ def drill(hand):
             return False
         j = j + 1
 
-#check the results
+# check the results
 def rating(g,p,gcn,pcn):
     g = int(g)
     p = int(p)
@@ -202,7 +202,8 @@ def writeresults(guestval,winner):
     with open("result.txt","a+") as f:
         f.write(str(guestval) +"|" + str(now) +"|" + str(winner)+"\n")
 
-#get the hands, analyze and says who the winner
+
+# get the hands, analyze and says who the winner
 def game():
     clrscr()
     print(poker)
@@ -238,6 +239,8 @@ def game():
     pccardval = getcardval(pchand)
 
     #get the highest combo name
+    #analyze return list what contains the comboname
+    #and the highest card value from the combo
     guestcomboname = analyze(guestcardval)
     pccomboname = analyze(pccardval)
     
