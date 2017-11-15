@@ -186,9 +186,10 @@ def result():
     print(poker)
     with open("result.txt") as results:
         content = results.readlines()
+        contentnum = len(content) if len(content) < 5 else 5
         if len(content) > 0:
             content.reverse()
-            for i in range(5):
+            for i in range(contentnum):
                 print(content[i])
         else:
             print("No results")
