@@ -22,7 +22,7 @@ t = threading.Thread(target=animate)
 t.start()
 
 #long process here
-time.sleep(7)
+time.sleep(1)
 done = True
 
 def writedata(user_data):
@@ -151,7 +151,9 @@ def getcardval(hand):
         card = hand[c]
         nextcard = cardvals[card]
         cards.append(nextcard)
+        
         c += 1
+    
     return cards
 
 
@@ -188,9 +190,12 @@ def four_of_kind(hand):
 #check if high card
 def high(hand):
     if int(hand[4]) > 10:
-        return [True, hand[4]]
+        high_is = True
     else:
-        return [False, 0]
+        high_is = False
+    
+    return [high_is, hand[4]]
+    
 
 #check if there is a pair
 def pair(hand):
@@ -225,7 +230,12 @@ def drill(hand):
 
 
 def analyze(hand):
-    hand.sort()
+    for i in range(len(hand)):
+        hand[i] = int(hand[i])
+    
+    hand = sorted(hand)
+    for i in range(len(hand)):
+        hand[i] = str(hand[i])
     res = 0
     
     straight_true = straight(hand)
@@ -407,7 +417,7 @@ def game(user):
     # and the highest card value from the combo
     guestcomboresult = analyze(guestcardval)
     pccomboresult = analyze(pccardval)
-
+    
 
     # get the highest combo value
     guestcombovalue = combos[guestcomboresult[0]]
