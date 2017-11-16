@@ -22,17 +22,20 @@ done = False
 t = threading.Thread(target=animate)
 t.start()
 
+
 # long process here
 time.sleep(1)
 done = True
+
 
 # write userdata to user.txt
 def writedata(user_data):
     with open("user.txt", "w") as data:
         data.write(user_data)
 
+
 # ask for name give 1000 token to start and give data to write to text
-def newuser(pot = 50):
+def newuser(pot=50):
     username = input("Give me your name:\n(minimum 5 character)\n")
     if len(username) < 5:
         newuser()
@@ -41,6 +44,7 @@ def newuser(pot = 50):
         list_user = username + " " + str(token) + " " + str(pot)
         writedata(list_user)
         return list_user
+
 
 # checking user.txt what contains the username and money of user
 def userdata():
@@ -66,6 +70,7 @@ def poker():
 
     print("\033[0;29;48m  \n")
 
+
 # value of combos
 combos = {
 	'high': '1',
@@ -75,6 +80,7 @@ combos = {
     'straight': '5',
     'nocombo': '0'
 }
+
 
 # value of the cards
 cardvals = {
@@ -92,6 +98,7 @@ cardvals = {
     'K': '13',
     'A': '14'
 }
+
 
 # pack of cards
 pack = [
@@ -115,7 +122,7 @@ prizecard = """
             @. .@
             @\=/@
             .- -.
-           /(.|.)\ 
+           /(.|.)\
            \ ).( /
            '( v )`
              \|/
@@ -130,6 +137,7 @@ def checkinput(userinput):
         return True
     except:
         return False
+
 
 # choose x random card from the pack
 # append cards to hand
@@ -183,6 +191,7 @@ def straight(hand):
         high_is = [False, 0]
     return high_is
 
+
 # check if four of kind
 def four_of_kind(hand):
     j = 0
@@ -196,7 +205,7 @@ def four_of_kind(hand):
             four_is = [False, 0]
         j = j + 1
     return four_is
-    
+
 
 # check if high card
 def high(hand):
@@ -205,23 +214,24 @@ def high(hand):
     else:
         high_is = False
     return [high_is, hand[4]]
-    
+
 
 # check if there is a pair
 def pair(hand):
     i = 0
     N = len(hand)
-    mypairrev = hand[::-1]   
+    mypairrev = hand[::-1]
     high_incombo = 0
     while i < N - 1:
         if mypairrev[i] == mypairrev[i+1]:
             high_incombo = mypairrev[i]
             pair_is = True
             break
-        else:  
+        else:
             pair_is = False
         i = i + 1
     return [pair_is, high_incombo]
+
 
 # check if there is a drill
 def drill(hand):
@@ -236,6 +246,7 @@ def drill(hand):
             drill_is = [False, 0]
         j = j + 1
     return drill_is
+
 
 # check hand to get combo
 def analyze(hand):
@@ -253,7 +264,7 @@ def analyze(hand):
     four_true = four_of_kind(hand)
 
     if straight_true[0]:
-        res = ["straight", straight_true[1]] 
+        res = ["straight", straight_true[1]]
     elif four_true[0]:
         res = ["four of a kind", four_true[1]]
     elif drill_true[0]:
@@ -264,12 +275,11 @@ def analyze(hand):
         res = ["high", high_true[1]]
     else:
         res = ["nocombo", max(hand)]
-    
     return res
 
 
 # check the results
-def rating(gcombo,pcombo,token,pot=50):
+def rating(gcombo, pcombo, token, pot=50):
     gcomboval = int(combos[gcombo[0]])
     pcomboval = int(combos[pcombo[0]])
     gcname = gcombo[0]
@@ -277,7 +287,7 @@ def rating(gcombo,pcombo,token,pot=50):
     gcardval = int(gcombo[1])
     pcardval = int(pcombo[1])
     token = int(token)
-    
+
     if gcomboval > pcomboval:
         winner = "You Win with: " + gcname + "!"
         token += pot
@@ -294,8 +304,8 @@ def rating(gcombo,pcombo,token,pot=50):
     else:
         winner = "The computer win with: " + pcname + "!"
         token -= pot
-        
-    return [winner,token, pot]
+
+    return [winner, token, pot]
 
 
 # open result and print last 5 result or all if less
@@ -316,6 +326,7 @@ def printresults(noresmsg):
         else:
             print(msg)
 
+
 # check result.txt
 def result():
     clrscr()
@@ -328,21 +339,23 @@ def result():
     clrscr()
     poker()
 
+
 def makesimple(cardlist):
     string = ""
     for card in cardlist:
         string += " " + str(card)
     return string
 
+
 # ask how many cards user wanna change
 # change hand with new cards
-#return hand
+# return hand
 def change(hand):
     msg = "How many cards you wanna change? (max 3)\n"
     notgoodnummsg = "Try again with a number between 1 and 3\n"
     askforcard = "Which number you wanna change?\n"
     notgoodmsg = "This is not a number or not between 1 and 5\n"
-    
+
     changenum = input(msg)
 
     if checkinput(changenum):
@@ -352,7 +365,7 @@ def change(hand):
             change(hand)
         elif changenum < 1:
             print(notgoodnummsg)
-            change(hand) 
+            change(hand)
         else:
             numlist = []
             for c in range(changenum):
@@ -370,11 +383,13 @@ def change(hand):
     else:
         print(notgoodmsg)
         change(hand)
- 
-# if user wanna change cards, ask for nums of the cards, and change it 
+
+
+# if user wanna change cards, ask for nums of the cards, and change it
 def askforchange(hand):
-    question = "\nWhat you wanna do?\n\n k - keep cards\n c - change cards\n n - newhand\n"
-    option = input(question)
+    question = "\nWhat you wanna do?\n"
+    options = "\n k - keep cards\n c - change cards\n n - newhand\n"
+    option = input(question + options)
     if option == "c":
         hand = change(hand)
     elif option == "n":
@@ -387,20 +402,23 @@ def askforchange(hand):
 
 
 # write result to txt
-def writeresults(guestval,winner):
+def writeresults(guestval, winner):
     now = datetime.datetime.today().strftime('%Y-%m-%d')
-    with open("result.txt","a+") as f:
+    with open("result.txt", "a+") as f:
         f.write(str(guestval) + "|" + str(now) + "|" + str(winner) + "\n")
 
-def checktokens(pot,token):
+
+def checktokens(pot, token):
     if int(token) - (int(pot) + 50) > 0:
         return True
     else:
         return False
 
+
 def table():
     tablewidth = 54
     tableheader = "_" * tablewidth
+
 
 # get the hands, analyze and says who's the winner
 def game(userdata):
@@ -418,25 +436,27 @@ def game(userdata):
     else:
         pot = 50
 
-    canplay = checktokens(pot,usertoken)
+    canplay = checktokens(pot, usertoken)
 
     if canplay:
-        replaymsg = "Do you wanna play another game?\n n - new game\n f - finish game\n"
+        replaymsg = "Do you wanna play another game?\n"
+        options = "n - new game\n f - finish game\n"
         clrscr()
         poker()
         guesthand = newhand(5)
         pchand = newhand(5)
-        
-        #make string from cards list
+
+        # make string from cards list
         gh = makesimple(guesthand)
         ph = makesimple(pchand)
-        print("Welcome " + username + "!\nYou have " + str(usertoken) + " tokens.")
+        print("Welcome " + username + "!\n")
+        print("You have " + str(usertoken) + " tokens.")
         print("The pot in this round is: " + str(pot) + "\n")
         print("Your cards are:\n")
         print(gh)
 
         guesthand = askforchange(guesthand)
-        
+
         # make string from cards list
         gh = makesimple(guesthand)
 
@@ -452,13 +472,10 @@ def game(userdata):
         guestcardval = getcardval(guesthand)
         pccardval = getcardval(pchand)
 
-
         # get the highest combo name
         # analyze return list what contains the comboname
-        # and the highest card value from the combo
         guestcomboresult = analyze(guestcardval)
         pccomboresult = analyze(pccardval)
-        
 
         # get the highest combo value
         guestcombovalue = combos[guestcomboresult[0]]
@@ -467,19 +484,18 @@ def game(userdata):
         # sum of combovalue and highest card value from the combo
         guestval = sum([int(guestcombovalue), int(guestcomboresult[1])])
 
-
         # get and print the winner name and winner combo name
-        roundresult = rating(guestcomboresult,pccomboresult,usertoken,pot)
+        roundresult = rating(guestcomboresult, pccomboresult, usertoken, pot)
 
         winner = roundresult[0]
         usertoken = roundresult[1]
-        writeresults(guestval,winner)
+        writeresults(guestval, winner)
         userdatas = username + " " + str(usertoken) + " " + str(pot)
         writedata(userdatas)
         sleep(1)
         print("\n" + winner)
 
-        newgame = input("\n" + replaymsg)
+        newgame = input("\n" + replaymsg + options)
         if newgame == "n":
             main(restart=1)
         elif newgame == "f":
@@ -488,6 +504,7 @@ def game(userdata):
         print("You don't have enough money to play!")
         sleep(5)
         main()
+
 
 # the program
 def main(restart=0):
