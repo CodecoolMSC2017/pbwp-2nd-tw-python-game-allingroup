@@ -31,19 +31,27 @@
 29|2017-11-16|You Win with: pair!
 111|2017-11-16|The computer win with: pair!
 29|2017-11-16|You Win with: pair!
-111|2017-11-16|The computer win with: pair!|50
-113|2017-11-16|The computer win with: pair!|50
-07|2017-11-16|The computer win with: high!|
-212|2017-11-16|You Win with: pair!|
-114|2017-11-16|ITS DRAW WITH high!|
-22|2017-11-16|The computer win with: pair!|
-311|2017-11-16|You Win with: drill!|
-27|2017-11-16|You Win with: pair!|
-112|2017-11-16|The computer win with: pair!|
-214|2017-11-16|You Win with: pair!|
-114|2017-11-16|You Win with: high!|
-114|2017-11-16|You Win with: high!|
-113|2017-11-16|The computer win with: high!|
-113|2017-11-16|The computer win with: pair!|
-213|2017-11-16|You Win with: pair!|
-112|2017-11-16|The computer win with: high!|
+111|2017-11-16|The computer win with: pair!
+113|2017-11-16|The computer win with: pair!
+07|2017-11-16|The computer win with: high!
+212|2017-11-16|You Win with: pair!
+114|2017-11-16|ITS DRAW WITH high!
+22|2017-11-16|The computer win with: pair!
+311|2017-11-16|You Win with: drill!
+27|2017-11-16|You Win with: pair!
+112|2017-11-16|The computer win with: pair!
+214|2017-11-16|You Win with: pair!
+114|2017-11-16|You Win with: high!
+114|2017-11-16|You Win with: high!
+113|2017-11-16|The computer win with: high!
+113|2017-11-16|The computer win with: pair!
+213|2017-11-16|You Win with: pair!
+112|2017-11-16|The computer win with: high!
+23|2017-11-16|The computer win with: drill!
+211|2017-11-16|You Win with: pair!
+28|2017-11-16|The computer win with: pair!
+111|2017-11-16|The computer win with: high!
+14|2017-11-16|The computer win with: pair!
+14|2017-11-16|You Win with: pair!
+13|2017-11-16|You Win with: high!
+5|2017-11-16|You Win with: pair!

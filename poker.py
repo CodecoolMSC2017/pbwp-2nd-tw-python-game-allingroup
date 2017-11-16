@@ -26,17 +26,21 @@ t.start()
 time.sleep(1)
 done = True
 
-
+# write userdata to user.txt
 def writedata(user_data):
     with open("user.txt", "w") as data:
         data.write(user_data)
 
+# ask for name give 1000 token to start and give data to write to text
 def newuser(pot = 50):
-    username = input("Give me your name:\n")
-    token = 1000
-    list_user = username + " " + str(token) + " " + str(pot)
-    writedata(list_user)
-    return list_user
+    username = input("Give me your name:\n(minimum 5 character)\n")
+    if len(username) < 5:
+        newuser()
+    else:
+        token = 1000
+        list_user = username + " " + str(token) + " " + str(pot)
+        writedata(list_user)
+        return list_user
 
 # checking user.txt what contains the username and money of user
 def userdata():
@@ -179,7 +183,7 @@ def straight(hand):
         high_is = [False, 0]
     return high_is
 
-
+# check if four of kind
 def four_of_kind(hand):
     j = 0
     N = len(hand)
@@ -194,7 +198,7 @@ def four_of_kind(hand):
     return four_is
     
 
-#check if high card
+# check if high card
 def high(hand):
     if int(hand[4]) > 10:
         high_is = True
@@ -203,7 +207,7 @@ def high(hand):
     return [high_is, hand[4]]
     
 
-#check if there is a pair
+# check if there is a pair
 def pair(hand):
     i = 0
     N = len(hand)
@@ -219,7 +223,7 @@ def pair(hand):
         i = i + 1
     return [pair_is, high_incombo]
 
-#check if there is a drill
+# check if there is a drill
 def drill(hand):
     j = 0
     N = len(hand)
@@ -233,7 +237,7 @@ def drill(hand):
         j = j + 1
     return drill_is
 
-
+# check hand to get combo
 def analyze(hand):
     for i in range(len(hand)):
         hand[i] = int(hand[i])
@@ -386,13 +390,17 @@ def askforchange(hand):
 def writeresults(guestval,winner):
     now = datetime.datetime.today().strftime('%Y-%m-%d')
     with open("result.txt","a+") as f:
-        f.write(str(guestval) + "|" + str(now) + "|" + str(winner) + "|" + "\n")
+        f.write(str(guestval) + "|" + str(now) + "|" + str(winner) + "\n")
 
 def checktokens(pot,token):
     if int(token) - (int(pot) + 50) > 0:
         return True
     else:
         return False
+
+def table():
+    tablewidth = 54
+    tableheader = "_" * tablewidth
 
 # get the hands, analyze and says who's the winner
 def game(userdata):
@@ -457,8 +465,7 @@ def game(userdata):
         pccombovalue = combos[pccomboresult[0]]
 
         # sum of combovalue and highest card value from the combo
-        guestval = guestcombovalue + guestcomboresult[1]
-        pcval = pccombovalue + guestcomboresult[1]
+        guestval = sum([int(guestcombovalue), int(guestcomboresult[1])])
 
 
         # get and print the winner name and winner combo name
@@ -485,17 +492,22 @@ def game(userdata):
 # the program
 def main(restart=0):
     pot = 50
-    inputmsg = "Press s to start,\n r for result,\n q to quit\n"
     clrscr()
     poker()
     user = userdata()
 
     if restart == 0:
+        print("MENU")
+        print("Choose an option and press enter")
+        inputmsg = "s - start,\nr - result,\nn - new user\nq - quit\n"
         keys = input(inputmsg)
         if keys == "s":
             game(user)
         elif keys == "r":
             result()
+        elif keys == "n":
+            user = newuser()
+            game(user)
         elif keys == "q":
             exit()
         else:
