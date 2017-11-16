@@ -348,6 +348,8 @@ def writeresults(guestval,winner):
 
 # get the hands, analyze and says who's the winner
 def game():
+    replaymsg = "Do you wanna play another game?\n n - new game\n f - finish game\n"
+
     clrscr()
     poker()
     guesthand = newhand(5)
@@ -398,6 +400,12 @@ def game():
     writeresults(guestval,winner)
 
     print(winner)
+
+    newgame = input(replaymsg)
+    if newgame == "n":
+        game()
+    elif newgame == "f":
+        main()
 
 
 # the program
