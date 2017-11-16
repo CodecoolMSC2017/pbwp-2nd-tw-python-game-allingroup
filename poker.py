@@ -210,15 +210,8 @@ def rating(g,p,gcn,pcn):
     return winner
 
 
-# check result.txt
-# make new if not found
-# open it and print last 5 result if found
-def result():
+def printresults(noresmsg):
     msg = "Press 'b' to go back to main menu!\n"
-    noresmsg = "Play with our poker and you will se your results here"
-    
-    clrscr()
-    print(poker)
     with open("result.txt") as results:
         content = results.readlines()
         contentnum = len(content) if len(content) < 5 else 5
@@ -233,6 +226,21 @@ def result():
             main()
         else:
             print(msg)
+
+# check result.txt
+# make new if not found
+# open it and print last 5 result if found
+def result():
+    clrscr()
+    print(poker)
+    noresmsg = "Play with our poker and you will see your results here"
+    try:
+        printresults(noresmsg)
+    except:
+        print(noresmsg)
+    clrscr()
+    print(poker)
+    
 
 def makesimple(cardlist):
     string = ""
@@ -316,7 +324,7 @@ def game():
     pccombovalue = combos[pccomboresult[0]]
     
     # sum of combovalue and highest card value from the combo
-    guestval = guestcombovalue + guestcomboresult[1]
+    guestval = int(guestcombovalue) + int(guestcomboresult[1])
     pcval = pccombovalue + guestcomboresult[1]
     
     # get the winner name
