@@ -28,7 +28,7 @@ done = True
 
 
 def writedata(user_data):
-    with open("user.txt", "r+") as data:
+    with open("user.txt", "w") as data:
         data.write(user_data)
 
 def newuser(pot = 50):
@@ -184,7 +184,6 @@ def four_of_kind(hand):
     j = 0
     N = len(hand)
     four_is = []
-    
     while j < N - 3:
         if hand[j] == hand[j+1] and hand[j+1] == hand[j+2] and hand[j+2] == hand[j+3]:
             four_is = [True, hand[j]]
@@ -242,12 +241,13 @@ def analyze(hand):
     for i in range(len(hand)):
         hand[i] = str(hand[i])
     res = 0
-    
+
     straight_true = straight(hand)
     pair_true = pair(hand)
     drill_true = drill(hand)
     high_true = high(hand)
     four_true = four_of_kind(hand)
+
     if straight_true[0]:
         res = ["straight", straight_true[1]] 
     elif four_true[0]:
@@ -265,13 +265,14 @@ def analyze(hand):
 
 
 # check the results
-def rating(gcombo,pcombo,pot,token):
+def rating(gcombo,pcombo,token,pot=50):
     gcomboval = int(combos[gcombo[0]])
     pcomboval = int(combos[pcombo[0]])
     gcname = gcombo[0]
     pcname = pcombo[0]
     gcardval = int(gcombo[1])
     pcardval = int(pcombo[1])
+    token = int(token)
     
     if gcomboval > pcomboval:
         winner = "You Win with: " + gcname + "!"
@@ -284,7 +285,7 @@ def rating(gcombo,pcombo,pot,token):
         elif gcardval == pcardval:
             winner = "ITS DRAW WITH " + gcname + "!"
         else:
-            "The computer win with: " + pcname + "!"
+            winner = "The computer win with: " + pcname + "!"
             token -= pot
     else:
         winner = "The computer win with: " + pcname + "!"
@@ -391,7 +392,7 @@ def checktokens(pot,token):
         return False
 
 # get the hands, analyze and says who's the winner
-def game(userdata,pot):
+def game(userdata):
     user = userdata.split(" ")
     username = user[0]
 
@@ -403,6 +404,8 @@ def game(userdata,pot):
 
     if len(user) > 2:
         pot = int(user[2]) + 50
+    else:
+        pot = 50
 
     canplay = checktokens(pot,usertoken)
 
@@ -456,7 +459,8 @@ def game(userdata,pot):
 
 
         # get and print the winner name and winner combo name
-        roundresult = rating(guestcomboresult,pccomboresult,pot,usertoken)
+        roundresult = rating(guestcomboresult,pccomboresult,usertoken,pot)
+
         winner = roundresult[0]
         usertoken = roundresult[1]
         writeresults(guestval,winner)
@@ -466,7 +470,7 @@ def game(userdata,pot):
 
         newgame = input(replaymsg)
         if newgame == "n":
-            game(userdata,pot)
+            main(restart=1)
         elif newgame == "f":
             main()
         
@@ -475,22 +479,25 @@ def game(userdata,pot):
         print("You don't have enough money to play!")
 
 # the program
-def main():
+def main(restart=0):
     pot = 50
     inputmsg = "Press s to start,\n r for result,\n q to quit\n"
     clrscr()
     poker()
     user = userdata()
 
-    keys = input(inputmsg)
-    if keys == "s":
-        game(user,pot)
-    elif keys == "r":
-        result()
-    elif keys == "q":
-        exit()
+    if restart == 0:
+        keys = input(inputmsg)
+        if keys == "s":
+            game(user)
+        elif keys == "r":
+            result()
+        elif keys == "q":
+            exit()
+        else:
+            main()
     else:
-        main()
+        game(user)
 
 if __name__ == "__main__":
     main()
