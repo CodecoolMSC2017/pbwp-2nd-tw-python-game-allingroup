@@ -7,8 +7,8 @@ import threading
 import sys
 import time
 
-done = False
-#here is the animation
+
+# here is the animation
 def animate():
     for c in itertools.cycle(['|', '/', '-', '\\']):
         if done:
@@ -16,25 +16,26 @@ def animate():
         sys.stdout.write('\rloading ' + c)
         sys.stdout.flush()
         time.sleep(0.1)
-    sys.stdout.write('\rDone!     ')
+    # sys.stdout.write('\rDone!     ')
 
+done = False
 t = threading.Thread(target=animate)
 t.start()
 
-#long process here
+# long process here
 time.sleep(1)
 done = True
 
-def writedata(user_data):
-    with open("user.txt", 'a+') as file:
-        file.write(user_data)
-        
 
+def writedata(user_data):
+    with open("user.txt", 'a+') as data:
+        data.write(user_data)
+
+# checking user.txt what contains the username and money of user
 def userdata():
     try:
-        with open("user.txt", "w") as file:
-            cont = file.read()
-            list_user = cont.split(" ")
+        with open("user.txt", "r") as data:
+            list_user = data.read()
     except:
         username = input("Give me your name:\n")
         token = 1000
@@ -52,7 +53,7 @@ def poker():
     _|_|_|    _|    _|  _|_|      _|_|_|_|  _|_|      
     _|        _|    _|  _|  _|    _|        _|        
     _|          _|_|    _|    _|    _|_|_|  _|        """)
-    
+
     print("\033[0;29;48m  \n")
 
 # value of combos
@@ -98,6 +99,19 @@ pack = [
     ['K', 'club'], ['K', 'diamond'], ['K', 'heart'], ['K', 'spade'],
     ['A', 'club'], ['A', 'diamond'], ['A', 'heart'], ['A', 'spade']
 ]
+
+prizecard = """
+             @@@
+            @. .@
+            @\=/@
+            .- -.
+           /(.|.)\ 
+           \ ).( /
+           '( v )`
+             \|/
+             (|)
+             '-`"""
+
 
 # check userinput is number
 def checkinput(userinput):
@@ -245,28 +259,26 @@ def analyze(hand):
 
 
 # check the results
-def rating(g,p,gcn,pcn):
-    g = int(g)
-    p = int(p)
-
-    if g > p:
-        winner = "You Win with: " + gcn + "!"
-        print("""
-             @@@
-            @. .@
-            @\=/@
-            .- -.
-           /(.|.)\ 
-           \ ).( /
-           '( v )`
-             \|/
-             (|)
-             '-`
-        """)
-    elif g == p:
-        winner = "ITS DRAW"
+def rating(guesthandvalue,pchandvalue,gcombo,pcombo):
+    ghv = int(guesthandvalue)
+    phv = int(pchandvalue)
+    gcname = gcombo[0]
+    pcname = pcombo[0]
+    gcval = int(gcombo[1])
+    pcval = int(pcombo[1])
+    
+    if ghv > phv:
+        winner = "You Win with: " + gcname + "!"
+        print(prizecard)
+    elif ghv == phv:
+        if gcval > pcval:
+            winner = "You Win with: " + gcname + "!"
+        elif gcval == pcval:
+            winner = "ITS DRAW WITH " + gcname + "!"
+        else:
+            "The computer win with: " + pcnanem + "!"
     else:
-        winner = "The computer win with: " + pcn + "!"
+        winner = "The computer win with: " + pcname + "!"
         
     return winner
 
@@ -364,10 +376,11 @@ def writeresults(guestval,winner):
 
 
 # get the hands, analyze and says who's the winner
-def game(user):
-    print(user)
+def game(userdata,pot):
+    replaymsg = "Do you wanna play another game?\n n - new game\n f - finish game\n"
     clrscr()
     poker()
+    user = userdata.split(" ")
     username = user[0]
     usertoken = user[1]
     guesthand = newhand(5)
@@ -413,15 +426,23 @@ def game(user):
     guestval = guestcombovalue + guestcomboresult[1]
     pcval = pccombovalue + guestcomboresult[1]
 
+
     # get and print the winner name and winner combo name
-    winner = rating(guestval,pcval,guestcomboresult[0],pccomboresult[0])
+    #winner = rating(guestval,pcval,guestcomboresult[0],pccomboresult[0])
+    winner = rating(guestcombovalue,pccombovalue,guestcomboresult,pccomboresult)
     writeresults(guestval,winner)
 
     print(winner)
 
+    newgame = input(replaymsg)
+    if newgame == "n":
+        game(userdata)
+    elif newgame == "f":
+        main()
 
 # the program
 def main():
+    pot = 50
     inputmsg = "Press s to start,\n r for result,\n q to quit\n"
     clrscr()
     poker()
@@ -429,7 +450,7 @@ def main():
 
     keys = input(inputmsg)
     if keys == "s":
-        game(user)
+        game(user,pot)
     elif keys == "r":
         result()
     elif keys == "q":
