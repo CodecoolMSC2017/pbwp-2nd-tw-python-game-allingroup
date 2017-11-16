@@ -291,7 +291,7 @@ def rating(gcombo,pcombo,token,pot=50):
         winner = "The computer win with: " + pcname + "!"
         token -= pot
         
-    return [winner,pot]
+    return [winner,token, pot]
 
 
 # open result and print last 5 result or all if less
@@ -400,7 +400,7 @@ def game(userdata):
         usertoken = user[1]
     else:
         userdata = newuser()
-        game(userdata,50)
+        game(userdata)
 
     if len(user) > 2:
         pot = int(user[2]) + 50
@@ -464,9 +464,10 @@ def game(userdata):
         winner = roundresult[0]
         usertoken = roundresult[1]
         writeresults(guestval,winner)
-        userdatas = username + " " + str(usertoken)
+        userdatas = username + " " + str(usertoken) + " " + str(pot)
         writedata(userdatas)
-        print(winner)
+        sleep(3)
+        print("\n" + winner)
 
         newgame = input(replaymsg)
         if newgame == "n":
@@ -477,6 +478,8 @@ def game(userdata):
         return pot
     else:
         print("You don't have enough money to play!")
+        sleep(5)
+        main()
 
 # the program
 def main(restart=0):
