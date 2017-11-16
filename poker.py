@@ -281,8 +281,6 @@ def result():
         printresults(noresmsg)
     except:
         print(noresmsg)
-    clrscr()
-    poker()
 
 def makesimple(cardlist):
     string = ""
