@@ -4,9 +4,16 @@ import os
 import datetime
 
 # header
-poker = '---------------------------------------\n|    -----------------------------    |\n|    | HHH    H   H  H HHHH HHH  |    |\n|    | H  H  HHH  H  H H    H  H |    |\n|    | HHHH H   H HHH  HHHH HHH  |    |\n|    | H     HHH  H H  H    H H  |    |\n|    | H      H   H  H HHHH H  H |    |\n|    -----------------------------    |\n|                                     |'
-left_side = "|               START                 |\n|               RESULT                |\n|               QUIT                  |\n|                                     |\n|                                     |"
-
+def poker():
+    print("\033[0;30;47m\n")
+    print("""
+    _|_|_|              _|                            
+    _|    _|    _|_|    _|  _|      _|_|    _|  _|_|  
+    _|_|_|    _|    _|  _|_|      _|_|_|_|  _|_|      
+    _|        _|    _|  _|  _|    _|        _|        
+    _|          _|_|    _|    _|    _|_|_|  _|        """)
+    
+    print("\033[0;29;48m  \n")
 # value of combos
 combos = {
 	'high': '1',
@@ -313,7 +320,7 @@ def game():
     ph = makesimple(pchand)
 
     clrscr()
-    print(poker)
+    poker()
     print("now, your cards are:\n")
     print(gh + "\n")
     
@@ -349,10 +356,9 @@ def game():
 # the program
 def main():
     clrscr()
-    print(poker)
-    print(left_side)
+    poker()
     
-    keys = input("|Press s to start,                    |\n|r for result,                        |\n|q to quit                            |\n---------------------------------------\n")
+    keys = input("Press s to start,\n r for result,\n q to quit")
     if keys == "s":
         game()
     elif keys == "r":
