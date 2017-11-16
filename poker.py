@@ -27,8 +27,9 @@ time.sleep(1)
 done = True
 
 
-def writedata(user_data,pot):
-    with open("user.txt", 'a+') as data:
+def writedata(user_data,pot,new=1):
+    openas = "a+" if new == 1 else "r"
+    with open("user.txt", openas) as data:
         data.write(user_data + " " + str(pot))
 
 # checking user.txt what contains the username and money of user
@@ -259,28 +260,32 @@ def analyze(hand):
 
 
 # check the results
-def rating(guesthandvalue,pchandvalue,gcombo,pcombo):
-    ghv = int(guesthandvalue)
-    phv = int(pchandvalue)
+def rating(gcombo,pcombo,pot,token):
+    gcomboval = int(combos[gcombo[0]])
+    pcomboval = int(combos[pcombo[0]])
     gcname = gcombo[0]
     pcname = pcombo[0]
-    gcval = int(gcombo[1])
-    pcval = int(pcombo[1])
+    gcardval = int(gcombo[1])
+    pcardval = int(pcombo[1])
     
-    if ghv > phv:
+    if gcomboval > pcomboval:
         winner = "You Win with: " + gcname + "!"
+        token += pot
         print(prizecard)
-    elif ghv == phv:
-        if gcval > pcval:
+    elif gcomboval == pcomboval:
+        if gcardval > pcardval:
             winner = "You Win with: " + gcname + "!"
-        elif gcval == pcval:
+            token += pot
+        elif gcardval == pcardval:
             winner = "ITS DRAW WITH " + gcname + "!"
         else:
             "The computer win with: " + pcnanem + "!"
+            token -= pot
     else:
         winner = "The computer win with: " + pcname + "!"
+        token -= pot
         
-    return winner
+    return [winner,pot]
 
 
 # open result and print last 5 result or all if less
@@ -441,10 +446,12 @@ def game(userdata,pot):
 
 
         # get and print the winner name and winner combo name
-        winner = rating(guestcombovalue,pccombovalue,guestcomboresult,pccomboresult)
+        roundresult = rating(guestcomboresult,pccomboresult,pot,usertoken)
+        winner = roundresult[0]
+        usertoken = roundresult[1]
         writeresults(guestval,winner)
         userdata = username + " " + str(usertoken)
-        writedata(userdata,pot)
+        writedata(userdata,pot,new=0)
         print(winner)
 
         newgame = input(replaymsg)
