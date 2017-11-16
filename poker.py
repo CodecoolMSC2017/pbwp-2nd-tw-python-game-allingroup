@@ -239,14 +239,14 @@ def printresults(noresmsg):
 # open it and print last 5 result if found
 def result():
     clrscr()
-    print(poker)
+    poker()
     noresmsg = "Play with our poker and you will see your results here"
     try:
         printresults(noresmsg)
     except:
         print(noresmsg)
     clrscr()
-    print(poker)
+    poker()
     
 
 def makesimple(cardlist):
@@ -273,14 +273,14 @@ def change(hand):
     
     return hand
         #old
-        newcards = changecards(change)
+        """newcards = changecards(change)
         current = 1
         for g in guesthand:
             for c in change:
                 if current == c:
                     guesthand[current - 1] = c
             current += 1
-    return guesthand
+        return guesthand"""
 
 # if user wanna change cards, ask for nums of the cards, and change it 
 def askforchange(hand):
@@ -302,7 +302,7 @@ def writeresults(guestval,winner):
 # get the hands, analyze and says who's the winner
 def game():
     clrscr()
-    print(poker)
+    poker()
     guesthand = newhand(5)
     pchand = newhand(5)
     
