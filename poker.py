@@ -27,19 +27,19 @@ time.sleep(1)
 done = True
 
 
-def writedata(user_data):
+def writedata(user_data,pot):
     with open("user.txt", 'a+') as data:
-        data.write(user_data)
+        data.write(user_data + " " + str(pot))
 
 # checking user.txt what contains the username and money of user
-def userdata():
+def userdata(pot):
     try:
         with open("user.txt", "r") as data:
             list_user = data.read()
     except:
         username = input("Give me your name:\n")
         token = 1000
-        list_user = username + " " + str(token)
+        list_user = username + " " + str(token + " " + str(pot))
         writedata(list_user)
     return list_user
 
@@ -355,7 +355,7 @@ def change(hand):
  
 # if user wanna change cards, ask for nums of the cards, and change it 
 def askforchange(hand):
-    question = "What you wanna do?\n k - keep cards\n c - change cards\n n - newhand\n"
+    question = "\nWhat you wanna do?\n\n k - keep cards\n c - change cards\n n - newhand\n"
     option = input(question)
     if option == "c":
         hand = change(hand)
@@ -372,10 +372,10 @@ def askforchange(hand):
 def writeresults(guestval,winner):
     now = datetime.datetime.today().strftime('%Y-%m-%d')
     with open("result.txt","a+") as f:
-        f.write(str(guestval) +"|" + str(now) +"|" + str(winner)+"\n")
+        f.write(str(guestval) + "|" + str(now) + "|" + str(winner) + "|" + "\n")
 
 def checktokens(pot,token):
-    if token - (bet + 50) > 0:
+    if int(token) - (int(pot) + 50) > 0:
         return True
     else:
         return False
@@ -386,7 +386,11 @@ def game(userdata,pot):
     username = user[0]
     usertoken = user[1]
 
+    if len(user) > 2:
+        pot = int(user[2]) + 50
+
     canplay = checktokens(pot,usertoken)
+
     if canplay:
         replaymsg = "Do you wanna play another game?\n n - new game\n f - finish game\n"
         clrscr()
@@ -398,7 +402,8 @@ def game(userdata,pot):
         gh = makesimple(guesthand)
         ph = makesimple(pchand)
         print("Welcome " + username + "!\nYou have " + str(usertoken) + " tokens.")
-        print("your cards are:\n")
+        print("The pot in this round is: " + str(pot) + "\n")
+        print("Your cards are:\n")
         print(gh)
 
         guesthand = askforchange(guesthand)
@@ -436,17 +441,19 @@ def game(userdata,pot):
 
 
         # get and print the winner name and winner combo name
-        #winner = rating(guestval,pcval,guestcomboresult[0],pccomboresult[0])
         winner = rating(guestcombovalue,pccombovalue,guestcomboresult,pccomboresult)
         writeresults(guestval,winner)
-
+        userdata = username + " " + str(usertoken)
+        writedata(userdata,pot)
         print(winner)
 
         newgame = input(replaymsg)
         if newgame == "n":
-            game(userdata)
+            game(userdata,pot)
         elif newgame == "f":
             main()
+        
+        return pot
     else:
         print("You don't have enough money to play!")
 
@@ -456,7 +463,7 @@ def main():
     inputmsg = "Press s to start,\n r for result,\n q to quit\n"
     clrscr()
     poker()
-    user = userdata()
+    user = userdata(pot)
 
     keys = input(inputmsg)
     if keys == "s":
