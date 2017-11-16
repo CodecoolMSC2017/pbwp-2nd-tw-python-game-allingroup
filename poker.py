@@ -85,6 +85,7 @@ pack = [
     ['A', 'club'], ['A', 'diamond'], ['A', 'heart'], ['A', 'spade']
 ]
 
+# check userinput is number
 def checkinput(userinput):
     try:
         float(userinput)
@@ -432,32 +433,33 @@ def game():
 
     clrscr()
     poker()
+
     print("now, your cards are:\n")
     print(gh + "\n")
-    
+
     print("and the computers cards are:\n")
     print(ph)
 
     guestcardval = getcardval(guesthand)
     pccardval = getcardval(pchand)
 
-    
+
     # get the highest combo name
     # analyze return list what contains the comboname
     # and the highest card value from the combo
     guestcomboresult = analyze(guestcardval)
     pccomboresult = analyze(pccardval)
-    
-    
+
+
     # get the highest combo value
     guestcombovalue = combos[guestcomboresult[0]]
     pccombovalue = combos[pccomboresult[0]]
-    
+
     # sum of combovalue and highest card value from the combo
     guestval = int(guestcombovalue) + int(guestcomboresult[1])
     pcval = pccombovalue + guestcomboresult[1]
-    
-    # get the winner name
+
+    # get and print the winner name and winner combo name
     winner = rating(guestval,pcval,guestcomboresult[0],pccomboresult[0])
     writeresults(guestval,winner)
 
@@ -466,10 +468,11 @@ def game():
 
 # the program
 def main():
+    inputmsg = "Press s to start,\n r for result,\n q to quit\n"
     clrscr()
     poker()
     
-    keys = input("Press s to start,\n r for result,\n q to quit\n")
+    keys = input(inputmsg)
     if keys == "s":
         game()
     elif keys == "r":
@@ -477,7 +480,7 @@ def main():
     elif keys == "q":
         exit()
     else:
-        print("Please enter s, r or q")
+        main()
 
 if __name__ == "__main__":
     main()
