@@ -32,27 +32,19 @@ def writedata(user_data):
 
 def userdata():
     try:
-        with open("user.txt") as file:
+        with open("user.txt", "w") as file:
             cont = file.read()
-            
             list_user = cont.split(" ")
-        
     except:
-        username = input("give me your name")
+        username = input("Give me your name:\n")
         token = 1000
-        
-        list_user = [username, 1000]
+        list_user = username + " " + str(token)
         writedata(list_user)
     return list_user
 
 
-
 # header
 def poker():
-    
-    
-    #long process here
-    
     print("\033[0;30;47m\n")
     print("""
     _|_|_|              _|                            
@@ -151,9 +143,7 @@ def getcardval(hand):
         card = hand[c]
         nextcard = cardvals[card]
         cards.append(nextcard)
-        
         c += 1
-    
     return cards
 
 
@@ -171,7 +161,6 @@ def straight(hand):
 
 
 def four_of_kind(hand):
-   
     j = 0
     N = len(hand)
     four_is = []
@@ -183,7 +172,6 @@ def four_of_kind(hand):
         else:
             four_is = [False, 0]
         j = j + 1
-    
     return four_is
     
 
@@ -193,7 +181,6 @@ def high(hand):
         high_is = True
     else:
         high_is = False
-    
     return [high_is, hand[4]]
     
 
@@ -225,14 +212,12 @@ def drill(hand):
         else:
             drill_is = [False, 0]
         j = j + 1
-    
     return drill_is
 
 
 def analyze(hand):
     for i in range(len(hand)):
         hand[i] = int(hand[i])
-    
     hand = sorted(hand)
     for i in range(len(hand)):
         hand[i] = str(hand[i])
@@ -380,6 +365,7 @@ def writeresults(guestval,winner):
 
 # get the hands, analyze and says who's the winner
 def game(user):
+    print(user)
     clrscr()
     poker()
     username = user[0]
@@ -436,15 +422,14 @@ def game(user):
 
 # the program
 def main():
-
     inputmsg = "Press s to start,\n r for result,\n q to quit\n"
     clrscr()
     poker()
     user = userdata()
-    print(user)
+
     keys = input(inputmsg)
     if keys == "s":
-        game()
+        game(user)
     elif keys == "r":
         result()
     elif keys == "q":
