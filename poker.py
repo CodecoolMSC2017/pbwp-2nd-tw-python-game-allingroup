@@ -98,17 +98,6 @@ def getcardval(hand):
         c += 1
     return cards
 
-def straight(hand):
-    maxcard = max(hand)
-    mincard = min(hand)
-    handlen = len(hand)
-    high_is = []
-    if int(maxcard) - int(mincard) == 4 and handlen == 5:
-        high_is = [True, maxcard]
-    else:
-        high_is = [False, 0]
-    return high_is
-
 
 # check if high card
 def straight(hand):
