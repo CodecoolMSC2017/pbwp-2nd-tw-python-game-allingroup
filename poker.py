@@ -123,10 +123,8 @@ def four_of_kind(hand):
     four_is = []
     
     while j < N - 3:
-        
         if hand[j] == hand[j+1] and hand[j+1] == hand[j+2] and hand[j+2] == hand[j+3]:
             four_is = [True, hand[j]]
-            
             break
         else:
             four_is = [False, 0]
@@ -137,9 +135,7 @@ def four_of_kind(hand):
 
 #check if high card
 def high(hand):
-    
     if int(hand[4]) > 10:
-
         return [True, hand[4]]
     else:
         return [False, 0]
@@ -148,40 +144,31 @@ def high(hand):
 def pair(hand):
     i = 0
     N = len(hand)
-    mypairrev = hand[::-1]
-    
-   
+    mypairrev = hand[::-1]   
     high_incombo = 0
     while i < N - 1:
         if mypairrev[i] == mypairrev[i+1]:
             high_incombo = mypairrev[i]
             pair_is = True
             break
-        else:
-            
+        else:  
             pair_is = False
         i = i + 1
     return [pair_is, high_incombo]
 #check if there is a drill
 def drill(hand):
-    
     j = 0
     N = len(hand)
     drill_is = []
     while j < N - 2:
         if hand[j] == hand[j+1] and hand[j+1] == hand[j+2]:
             drill_is = [True, hand[j]]
-            
             break
         else:
             drill_is = [False, 0]
         j = j + 1
     
     return drill_is
-
-
-
-
 
 
 def analyze(hand):
@@ -204,7 +191,7 @@ def analyze(hand):
     elif high_true[0]:
         res = ["high", high_true[1]]
     else:
-        res = ["nocombo", 0]
+        res = ["nocombo", max(hand)]
     
     return res
 
@@ -325,13 +312,12 @@ def game():
     
     
     # get the highest combo value
-    guestcombores = combos[guestcomboresult[0]]
-    pccombores = combos[pccomboresult[0]]
-    #print("guestcombores: " + str(guestcombores) + " guestcomboresult[1]: " + str(guestcomboresult[1]))
+    guestcombovalue = combos[guestcomboresult[0]]
+    pccombovalue = combos[pccomboresult[0]]
     
     # sum of combovalue and highest card value from the combo
-    guestval = guestcombores + guestcomboresult[1]
-    pcval = pccombores + guestcomboresult[1]
+    guestval = guestcombovalue + guestcomboresult[1]
+    pcval = pccombovalue + guestcomboresult[1]
     
     # get the winner name
     winner = rating(guestval,pcval,guestcomboresult[0],pccomboresult[0])
