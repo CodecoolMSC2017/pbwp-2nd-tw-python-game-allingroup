@@ -25,6 +25,28 @@ t.start()
 time.sleep(7)
 done = True
 
+def writedata(user_data):
+    with open("user.txt", 'a+') as file:
+        file.write(user_data)
+        
+
+def userdata():
+    try:
+        with open("user.txt") as file:
+            cont = file.read()
+            
+            list_user = cont.split(" ")
+        
+    except:
+        username = input("give me your name")
+        token = 1000
+        
+        list_user = [username, 1000]
+        writedata(list_user)
+    return list_user
+
+
+
 # header
 def poker():
     
@@ -281,6 +303,8 @@ def result():
         printresults(noresmsg)
     except:
         print(noresmsg)
+    clrscr()
+    poker()
 
 def makesimple(cardlist):
     string = ""
@@ -346,8 +370,6 @@ def writeresults(guestval,winner):
 
 # get the hands, analyze and says who's the winner
 def game():
-    replaymsg = "Do you wanna play another game?\n n - new game\n f - finish game\n"
-
     clrscr()
     poker()
     guesthand = newhand(5)
@@ -399,19 +421,15 @@ def game():
 
     print(winner)
 
-    newgame = input(replaymsg)
-    if newgame == "n":
-        game()
-    elif newgame == "f":
-        main()
-
 
 # the program
 def main():
+
     inputmsg = "Press s to start,\n r for result,\n q to quit\n"
     clrscr()
     poker()
-    
+    user = userdata()
+    print(user)
     keys = input(inputmsg)
     if keys == "s":
         game()
