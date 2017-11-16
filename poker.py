@@ -5,8 +5,10 @@ import datetime
 import itertools
 import threading
 import sys
+import time
 
-# Loading screen
+done = False
+#here is the animation
 def animate():
     for c in itertools.cycle(['|', '/', '-', '\\']):
         if done:
@@ -16,15 +18,19 @@ def animate():
         time.sleep(0.1)
     sys.stdout.write('\rDone!     ')
 
+t = threading.Thread(target=animate)
+t.start()
+
+#long process here
+time.sleep(10)
+done = True
+
 # header
 def poker():
-    done = False
-    animate()
-    t = threading.Thread(target=animate)
-    t.start()
+    
+    
     #long process here
-    time.sleep(10)
-    done = True
+    
     print("\033[0;30;47m\n")
     print("""
     _|_|_|              _|                            
