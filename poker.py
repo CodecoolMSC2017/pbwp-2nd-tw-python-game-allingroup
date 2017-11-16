@@ -2,9 +2,29 @@ import random
 from time import sleep
 import os
 import datetime
+import itertools
+import threading
+import sys
+
+# Loading screen
+def animate():
+    for c in itertools.cycle(['|', '/', '-', '\\']):
+        if done:
+            break
+        sys.stdout.write('\rloading ' + c)
+        sys.stdout.flush()
+        time.sleep(0.1)
+    sys.stdout.write('\rDone!     ')
 
 # header
 def poker():
+    done = False
+    animate()
+    t = threading.Thread(target=animate)
+    t.start()
+    #long process here
+    time.sleep(10)
+    done = True
     print("\033[0;30;47m\n")
     print("""
     _|_|_|              _|                            
