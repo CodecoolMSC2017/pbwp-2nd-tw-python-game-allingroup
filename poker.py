@@ -248,15 +248,24 @@ def makesimple(cardlist):
         string += " " + str(card)
     return string
 
-def change(guesthand):
-    msg = "Type here the number(s) of the card(s) you want to change: (max 3 cards)\n"
+def change(hand):
+    msg = "How many cards you wanna change? (max 3)\n"
     notgoodnummsg = "Try again with a number between 1 and 3"
+    askforcard = "Which number you wanna change?\n"
+    notgoodmsg = "This is not a number or not between 1 and 5"
     
-    change = input(msg)
-    if len(change) > 3 and len(change) < 5:
+    changenum = input(msg)
+    if changenum > 3 and changenum < 1:
         print(notgoodmsg)
-        change = input(msg)
+        change(hand) 
     else:
+        numlist = []
+        for c in range(changenum):
+            cardnum = input(askforcard)
+            numlist.append(cardnum)
+    
+    return hand
+        #old
         newcards = changecards(change)
         current = 1
         for g in guesthand:
@@ -265,6 +274,15 @@ def change(guesthand):
                     guesthand[current - 1] = c
             current += 1
     return guesthand
+
+# if user wanna change cards, ask for nums of the cards, and change it 
+def askforchange(hand):
+    option = input("What you wanna do?\n k - keep cards\n c - change cards\n n - newhand\n")
+    if option == "c":
+        guesthand = change(guesthand)
+    elif option == "n":
+        guesthand = newhand(5)
+    elif option == "k":
 
 
 # write result to txt
@@ -287,15 +305,9 @@ def game():
 
     print("your cards are:\n")
     print(gh)
-    option = input("do you wanna change cards? (y/n)\n")
 
-
-    # if user wanna change cards, ask for nums of the cards, and change it 
-    if option == "y":
-        clrscr()
-        guesthand = change(guesthand)
-
-
+    guesthand = askforchange(guesthand)
+    
     # make string from cards list
     gh = makesimple(guesthand)
     ph = makesimple(pchand)
