@@ -22,7 +22,7 @@ t = threading.Thread(target=animate)
 t.start()
 
 #long process here
-time.sleep(10)
+time.sleep(7)
 done = True
 
 # header
