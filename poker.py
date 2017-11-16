@@ -27,21 +27,26 @@ time.sleep(1)
 done = True
 
 
-def writedata(user_data,pot,new=1):
-    openas = "a+" if new == 1 else "r"
-    with open("user.txt", openas) as data:
-        data.write(user_data + " " + str(pot))
+def writedata(user_data):
+    with open("user.txt", "r+") as data:
+        data.write(user_data)
+
+def newuser(pot = 50):
+    username = input("Give me your name:\n")
+    token = 1000
+    list_user = username + " " + str(token) + " " + str(pot)
+    writedata(list_user)
+    return list_user
 
 # checking user.txt what contains the username and money of user
-def userdata(pot):
+def userdata():
     try:
         with open("user.txt", "r") as data:
             list_user = data.read()
+            if len(list_user) == 0:
+                newuser()
     except:
-        username = input("Give me your name:\n")
-        token = 1000
-        list_user = username + " " + str(token + " " + str(pot))
-        writedata(list_user)
+        list_user = newuser()
     return list_user
 
 
@@ -279,7 +284,7 @@ def rating(gcombo,pcombo,pot,token):
         elif gcardval == pcardval:
             winner = "ITS DRAW WITH " + gcname + "!"
         else:
-            "The computer win with: " + pcnanem + "!"
+            "The computer win with: " + pcname + "!"
             token -= pot
     else:
         winner = "The computer win with: " + pcname + "!"
@@ -389,7 +394,12 @@ def checktokens(pot,token):
 def game(userdata,pot):
     user = userdata.split(" ")
     username = user[0]
-    usertoken = user[1]
+
+    if len(user) > 1:
+        usertoken = user[1]
+    else:
+        userdata = newuser()
+        game(userdata,50)
 
     if len(user) > 2:
         pot = int(user[2]) + 50
@@ -450,8 +460,8 @@ def game(userdata,pot):
         winner = roundresult[0]
         usertoken = roundresult[1]
         writeresults(guestval,winner)
-        userdata = username + " " + str(usertoken)
-        writedata(userdata,pot,new=0)
+        userdatas = username + " " + str(usertoken)
+        writedata(userdatas)
         print(winner)
 
         newgame = input(replaymsg)
@@ -470,7 +480,7 @@ def main():
     inputmsg = "Press s to start,\n r for result,\n q to quit\n"
     clrscr()
     poker()
-    user = userdata(pot)
+    user = userdata()
 
     keys = input(inputmsg)
     if keys == "s":
