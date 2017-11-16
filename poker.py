@@ -374,71 +374,81 @@ def writeresults(guestval,winner):
     with open("result.txt","a+") as f:
         f.write(str(guestval) +"|" + str(now) +"|" + str(winner)+"\n")
 
+def checktokens(pot,token):
+    if token - (bet + 50) > 0:
+        return True
+    else:
+        return False
 
 # get the hands, analyze and says who's the winner
 def game(userdata,pot):
-    replaymsg = "Do you wanna play another game?\n n - new game\n f - finish game\n"
-    clrscr()
-    poker()
     user = userdata.split(" ")
     username = user[0]
     usertoken = user[1]
-    guesthand = newhand(5)
-    pchand = newhand(5)
-    
-    #make string from cards list
-    gh = makesimple(guesthand)
-    ph = makesimple(pchand)
-    print("Welcome " + username)
-    print("your cards are:\n")
-    print(gh)
 
-    guesthand = askforchange(guesthand)
-    
-    # make string from cards list
-    gh = makesimple(guesthand)
+    canplay = checktokens(pot,usertoken)
+    if canplay:
+        replaymsg = "Do you wanna play another game?\n n - new game\n f - finish game\n"
+        clrscr()
+        poker()
+        guesthand = newhand(5)
+        pchand = newhand(5)
+        
+        #make string from cards list
+        gh = makesimple(guesthand)
+        ph = makesimple(pchand)
+        print("Welcome " + username + "!\nYou have " + str(usertoken) + " tokens.")
+        print("your cards are:\n")
+        print(gh)
 
-    clrscr()
-    poker()
+        guesthand = askforchange(guesthand)
+        
+        # make string from cards list
+        gh = makesimple(guesthand)
 
-    print("now, your cards are:\n")
-    print(gh + "\n")
+        clrscr()
+        poker()
 
-    print("and the computers cards are:\n")
-    print(ph)
+        print("now, your cards are:\n")
+        print(gh + "\n")
 
-    guestcardval = getcardval(guesthand)
-    pccardval = getcardval(pchand)
+        print("and the computers cards are:\n")
+        print(ph)
 
-
-    # get the highest combo name
-    # analyze return list what contains the comboname
-    # and the highest card value from the combo
-    guestcomboresult = analyze(guestcardval)
-    pccomboresult = analyze(pccardval)
-    
-
-    # get the highest combo value
-    guestcombovalue = combos[guestcomboresult[0]]
-    pccombovalue = combos[pccomboresult[0]]
-
-    # sum of combovalue and highest card value from the combo
-    guestval = guestcombovalue + guestcomboresult[1]
-    pcval = pccombovalue + guestcomboresult[1]
+        guestcardval = getcardval(guesthand)
+        pccardval = getcardval(pchand)
 
 
-    # get and print the winner name and winner combo name
-    #winner = rating(guestval,pcval,guestcomboresult[0],pccomboresult[0])
-    winner = rating(guestcombovalue,pccombovalue,guestcomboresult,pccomboresult)
-    writeresults(guestval,winner)
+        # get the highest combo name
+        # analyze return list what contains the comboname
+        # and the highest card value from the combo
+        guestcomboresult = analyze(guestcardval)
+        pccomboresult = analyze(pccardval)
+        
 
-    print(winner)
+        # get the highest combo value
+        guestcombovalue = combos[guestcomboresult[0]]
+        pccombovalue = combos[pccomboresult[0]]
 
-    newgame = input(replaymsg)
-    if newgame == "n":
-        game(userdata)
-    elif newgame == "f":
-        main()
+        # sum of combovalue and highest card value from the combo
+        guestval = guestcombovalue + guestcomboresult[1]
+        pcval = pccombovalue + guestcomboresult[1]
+
+
+        # get and print the winner name and winner combo name
+        #winner = rating(guestval,pcval,guestcomboresult[0],pccomboresult[0])
+        winner = rating(guestcombovalue,pccombovalue,guestcomboresult,pccomboresult)
+        writeresults(guestval,winner)
+
+        print(winner)
+
+        newgame = input(replaymsg)
+        if newgame == "n":
+            game(userdata)
+        elif newgame == "f":
+            main()
+    else:
+        print("You don't have enough money to play!")
 
 # the program
 def main():
