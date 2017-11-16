@@ -343,8 +343,11 @@ def change(hand):
 
     if checkinput(changenum):
         changenum = int(changenum)
-        if changenum > 3 and changenum < 1:
-            print(notgoodmsg)
+        if changenum > 3:
+            print(notgoodnummsg)
+            change(hand)
+        elif changenum < 1:
+            print(notgoodnummsg)
             change(hand) 
         else:
             numlist = []
@@ -466,16 +469,14 @@ def game(userdata):
         writeresults(guestval,winner)
         userdatas = username + " " + str(usertoken) + " " + str(pot)
         writedata(userdatas)
-        sleep(3)
+        sleep(1)
         print("\n" + winner)
 
-        newgame = input(replaymsg)
+        newgame = input("\n" + replaymsg)
         if newgame == "n":
             main(restart=1)
         elif newgame == "f":
             main()
-        
-        return pot
     else:
         print("You don't have enough money to play!")
         sleep(5)
