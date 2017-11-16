@@ -261,7 +261,8 @@ def change(hand):
     
     changenum = input(msg)
 
-    if checknum(changenum):
+    if checkinput(changenum):
+        changenum = int(changenum)
         if changenum > 3 and changenum < 1:
             print(notgoodmsg)
             change(hand) 
@@ -272,10 +273,10 @@ def change(hand):
                 numlist.append(cardnum)
 
             current = 1
-            for g in guesthand:
+            for g in hand:
                 for num in numlist:
                     if current == num:
-                        guesthand[current - 1] = c
+                        hand[current - 1] = c
                 current += 1
 
             return hand
@@ -288,13 +289,14 @@ def askforchange(hand):
     question = "What you wanna do?\n k - keep cards\n c - change cards\n n - newhand\n"
     option = input(question)
     if option == "c":
-        guesthand = change(guesthand)
+        hand = change(hand)
     elif option == "n":
-        guesthand = newhand(5)
+        hand = newhand(5)
     elif option == "k":
-        guesthand = hand
+        hand = hand
     else:
         askforchange(hand)
+    return hand
 
 
 # write result to txt
@@ -362,7 +364,7 @@ def main():
     clrscr()
     poker()
     
-    keys = input("Press s to start,\n r for result,\n q to quit")
+    keys = input("Press s to start,\n r for result,\n q to quit\n")
     if keys == "s":
         game()
     elif keys == "r":
