@@ -34,6 +34,7 @@ def poker():
     _|          _|_|    _|    _|    _|_|_|  _|        """)
     
     print("\033[0;29;48m  \n")
+
 # value of combos
 combos = {
 	'high': '1',
@@ -78,6 +79,12 @@ pack = [
     ['A', 'club'], ['A', 'diamond'], ['A', 'heart'], ['A', 'spade']
 ]
 
+def checkinput(userinput):
+    try:
+        float(userinput)
+        return True
+    except:
+        return False
 
 # choose x random card from the pack
 # append cards to hand
@@ -315,6 +322,7 @@ def rating(g,p,gcn,pcn):
     return winner
 
 
+# open result and print last 5 result or all if less
 def printresults(noresmsg):
     msg = "Press 'b' to go back to main menu!\n"
     with open("result.txt") as results:
@@ -333,8 +341,6 @@ def printresults(noresmsg):
             print(msg)
 
 # check result.txt
-# make new if not found
-# open it and print last 5 result if found
 def result():
     clrscr()
     poker()
@@ -345,7 +351,6 @@ def result():
         print(noresmsg)
     clrscr()
     poker()
-    
 
 def makesimple(cardlist):
     string = ""
@@ -353,41 +358,53 @@ def makesimple(cardlist):
         string += " " + str(card)
     return string
 
+# ask how many cards user wanna change
+# change hand with new cards
+#return hand
 def change(hand):
     msg = "How many cards you wanna change? (max 3)\n"
-    notgoodnummsg = "Try again with a number between 1 and 3"
+    notgoodnummsg = "Try again with a number between 1 and 3\n"
     askforcard = "Which number you wanna change?\n"
-    notgoodmsg = "This is not a number or not between 1 and 5"
+    notgoodmsg = "This is not a number or not between 1 and 5\n"
     
     changenum = input(msg)
-    if changenum > 3 and changenum < 1:
-        print(notgoodmsg)
-        change(hand) 
-    else:
-        numlist = []
-        for c in range(changenum):
-            cardnum = input(askforcard)
-            numlist.append(cardnum)
-    
-    return hand
-        #old
-        """newcards = changecards(change)
-        current = 1
-        for g in guesthand:
-            for c in change:
-                if current == c:
-                    guesthand[current - 1] = c
-            current += 1
-        return guesthand"""
 
+    if checkinput(changenum):
+        changenum = int(changenum)
+        if changenum > 3 and changenum < 1:
+            print(notgoodmsg)
+            change(hand) 
+        else:
+            numlist = []
+            for c in range(changenum):
+                cardnum = input(askforcard)
+                numlist.append(cardnum)
+
+            current = 1
+            for g in hand:
+                for num in numlist:
+                    if current == num:
+                        hand[current - 1] = c
+                current += 1
+
+            return hand
+    else:
+        print(notgoodmsg)
+        change(hand)
+ 
 # if user wanna change cards, ask for nums of the cards, and change it 
 def askforchange(hand):
-    option = input("What you wanna do?\n k - keep cards\n c - change cards\n n - newhand\n")
+    question = "What you wanna do?\n k - keep cards\n c - change cards\n n - newhand\n"
+    option = input(question)
     if option == "c":
-        guesthand = change(guesthand)
+        hand = change(hand)
     elif option == "n":
-        guesthand = newhand(5)
+        hand = newhand(5)
     elif option == "k":
+        hand = hand
+    else:
+        askforchange(hand)
+    return hand
 
 
 # write result to txt
@@ -415,7 +432,6 @@ def game():
     
     # make string from cards list
     gh = makesimple(guesthand)
-    ph = makesimple(pchand)
 
     clrscr()
     poker()
@@ -456,7 +472,7 @@ def main():
     clrscr()
     poker()
     
-    keys = input("Press s to start,\n r for result,\n q to quit")
+    keys = input("Press s to start,\n r for result,\n q to quit\n")
     if keys == "s":
         game()
     elif keys == "r":
