@@ -369,16 +369,18 @@ def writeresults(guestval,winner):
 
 
 # get the hands, analyze and says who's the winner
-def game():
+def game(user):
     clrscr()
     poker()
+    username = user[0]
+    usertoken = user[1]
     guesthand = newhand(5)
     pchand = newhand(5)
     
     #make string from cards list
     gh = makesimple(guesthand)
     ph = makesimple(pchand)
-
+    print("Welcome " + username)
     print("your cards are:\n")
     print(gh)
 
@@ -412,7 +414,7 @@ def game():
     pccombovalue = combos[pccomboresult[0]]
 
     # sum of combovalue and highest card value from the combo
-    guestval = int(guestcombovalue) + int(guestcomboresult[1])
+    guestval = guestcombovalue + guestcomboresult[1]
     pcval = pccombovalue + guestcomboresult[1]
 
     # get and print the winner name and winner combo name
