@@ -162,6 +162,7 @@ def pair(hand):
             pair_is = False
         i = i + 1
     return [pair_is, high_incombo]
+
 #check if there is a drill
 def drill(hand):
     j = 0
