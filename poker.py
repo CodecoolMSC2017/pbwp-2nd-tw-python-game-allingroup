@@ -46,6 +46,12 @@ def newuser(pot=50):
         return list_user
 
 
+def gamemodes():
+    with open("modes.txt", "r") as data:
+        modes = data.read()
+    return modes
+
+
 # checking user.txt what contains the username and money of user
 def userdata():
     try:
@@ -431,6 +437,8 @@ def game(userdata):
     if canplay:
         replaymsg = "Do you wanna play another game?\n"
         options = "n - new game\nf - finish game\n"
+        modemsg = "Choose how hardcore are you:"
+        modeoptions = "b - beginner\np - pro"
         clrscr()
         poker()
         guesthand = newhand(5)
@@ -441,6 +449,14 @@ def game(userdata):
         ph = makesimple(pchand)
         print("Welcome " + username + "!\n")
         print("You have " + str(usertoken) + " tokens.")
+        mode = input(modemsg + modeoptions)
+        modes = gamesmodes()
+
+        if mode == "b":
+            pass
+        elif mode == "p":
+            pass
+
         print("The pot in this round is: " + str(pot) + "\n")
         print("Your cards are:\n")
         print(gh)
