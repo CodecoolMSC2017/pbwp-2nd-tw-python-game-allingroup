@@ -81,3 +81,13 @@
 8|2017-11-17|You Win with: pair!
 11|2017-11-17|You Win with: pair!
 15|2017-11-17|The computer win with: pair!
+7|2017-11-17|You Win with: pair!
+13|2017-11-17|The computer win with: high!
+5|2017-11-17|The computer win with: pair!
+15|2017-11-17|You Win with: high!
+13|2017-11-17|The computer win with: pair!
+16|2017-11-17|You Win with: pair!
+15|2017-11-17|You Win with: pair!
+15|2017-11-17|ITS DRAW WITH high!
+13|2017-11-17|You Win with: pair!
+13|2017-11-17|ITS DRAW WITH high!

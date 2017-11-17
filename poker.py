@@ -528,7 +528,7 @@ def main(restart=0):
     if restart == 0:
         print("MENU")
         print("Choose an option and press enter")
-        inputmsg = "s - start,\nr - result,\nn - new user\nq - quit\n"
+        inputmsg = "s - start,\nr - result,\nn - new user,\nq - quit\n"
         keys = input(inputmsg)
         if keys == "s":
             game(user)
