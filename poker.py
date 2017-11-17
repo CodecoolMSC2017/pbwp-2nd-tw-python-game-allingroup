@@ -35,7 +35,7 @@ def writedata(user_data):
 
 
 # ask for name give 1000 token to start and give data to write to text
-def newuser(pot=50):
+def newuser(pot=30):
     username = input("Give me your name:\n(minimum 5 character)\n")
     if len(username) < 5:
         newuser()
@@ -494,7 +494,7 @@ def game(userdata):
         pccombovalue = combos[pccombores[0]]
 
         # sum of combovalue and highest card value from the combo
-        guestval = sum([int(guestcombovalue), int(guestcomboresult[1])])
+        guestval = sum([int(guestcombovalue), int(guestcombores[1])])
 
         # get and print the winner name and winner combo name
         roundres = rating(guestcombores, pccombores, pcboost, usertoken, pot)
