@@ -294,7 +294,6 @@ def rating(gcombo, pcombo, token, pot=50):
     else:
         winner = "The computer win with: " + pcname + "!"
         token -= pot
-
     return [winner, token, pot]
 
 
@@ -451,8 +450,8 @@ def game(userdata):
         # make string from cards list
         gh = makesimple(guesthand)
 
-        #clrscr()
-        #poker()
+        clrscr()
+        poker()
 
         print("now, your cards are:\n")
         print(gh + "\n")
@@ -493,6 +492,7 @@ def game(userdata):
             main()
     else:
         print("You don't have enough money to play!")
+        print("Bit if you can't stop playing you can make a new user")
         sleep(5)
         main()
 
