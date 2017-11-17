@@ -486,21 +486,21 @@ def game(userdata):
 
         # get the highest combo name
         # analyze return list what contains the comboname
-        guestcomboresult = analyze(guestcardval)
-        pccomboresult = analyze(pccardval)
+        guestcombores = analyze(guestcardval)
+        pccombores = analyze(pccardval)
 
         # get the highest combo value
-        guestcombovalue = combos[guestcomboresult[0]]
-        pccombovalue = combos[pccomboresult[0]]
+        guestcombovalue = combos[guestcombores[0]]
+        pccombovalue = combos[pccombores[0]]
 
         # sum of combovalue and highest card value from the combo
         guestval = sum([int(guestcombovalue), int(guestcomboresult[1])])
 
         # get and print the winner name and winner combo name
-        roundresult = rating(guestcomboresult, pccomboresult, pcboost, usertoken, pot)
+        roundres = rating(guestcombores, pccombores, pcboost, usertoken, pot)
 
-        winner = roundresult[0]
-        usertoken = roundresult[1]
+        winner = roundres[0]
+        usertoken = roundres[1]
         writeresults(guestval, winner)
         userdatas = username + " " + str(usertoken) + " " + str(pot)
         writedata(userdatas)
