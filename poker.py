@@ -46,10 +46,11 @@ def newuser(pot=50):
         return list_user
 
 
-def gamemodes():
+def gamemodes(modenum):
     with open("modes.txt", "r") as data:
-        modes = data.read()
-    return modes
+        modes = data.readlines()
+        mode = modes[0] if modenum == "b" else modes[1]
+    return mode
 
 
 # checking user.txt what contains the username and money of user
@@ -275,9 +276,10 @@ def analyze(hand):
 
 
 # check the results
-def rating(gcombo, pcombo, token, pot=50):
+def rating(gcombo, pcombo, pcboost, token, pot=50):
     gcomboval = int(combos[gcombo[0]])
     pcomboval = int(combos[pcombo[0]])
+    pcomboval += int(pcboost)
     gcname = gcombo[0]
     pcname = pcombo[0]
     gcardval = int(gcombo[1])
@@ -418,6 +420,8 @@ def table():
 
 # get the hands, analyze and says who's the winner
 def game(userdata):
+    modemsg = "\nChoose how hardcore are you:"
+    modeoptions = "\nb - beginner\np - pro\n"
     user = userdata.split(" ")
     username = user[0]
 
@@ -427,18 +431,27 @@ def game(userdata):
         userdata = newuser()
         game(userdata)
 
-    if len(user) > 2:
-        pot = int(user[2]) + 50
+    mode = input(modemsg + modeoptions)
+
+    if mode == "b" or mode == "p":
+        playmode = gamemodes(mode)
     else:
-        pot = 50
+        game(userdata)
+
+    modedata = playmode.split(" ")
+    potboost = modedata[1]
+    pcboost = modedata[2]
+
+    if len(user) > 2:
+        pot = int(user[2]) + int(potboost)
+    else:
+        pot = 50 if mode == "p" else 30
 
     canplay = checktokens(pot, usertoken)
 
     if canplay:
         replaymsg = "Do you wanna play another game?\n"
         options = "n - new game\nf - finish game\n"
-        modemsg = "Choose how hardcore are you:"
-        modeoptions = "b - beginner\np - pro"
         clrscr()
         poker()
         guesthand = newhand(5)
@@ -449,13 +462,6 @@ def game(userdata):
         ph = makesimple(pchand)
         print("Welcome " + username + "!\n")
         print("You have " + str(usertoken) + " tokens.")
-        mode = input(modemsg + modeoptions)
-        modes = gamesmodes()
-
-        if mode == "b":
-            pass
-        elif mode == "p":
-            pass
 
         print("The pot in this round is: " + str(pot) + "\n")
         print("Your cards are:\n")
@@ -491,7 +497,7 @@ def game(userdata):
         guestval = sum([int(guestcombovalue), int(guestcomboresult[1])])
 
         # get and print the winner name and winner combo name
-        roundresult = rating(guestcomboresult, pccomboresult, usertoken, pot)
+        roundresult = rating(guestcomboresult, pccomboresult, pcboost, usertoken, pot)
 
         winner = roundresult[0]
         usertoken = roundresult[1]
@@ -515,7 +521,6 @@ def game(userdata):
 
 # the program
 def main(restart=0):
-    pot = 50
     clrscr()
     poker()
     user = userdata()

@@ -78,3 +78,6 @@
 9|2017-11-17|You Win with: pair!
 15|2017-11-17|The computer win with: drill!
 8|2017-11-17|You Win with: drill!
+8|2017-11-17|You Win with: pair!
+11|2017-11-17|You Win with: pair!
+15|2017-11-17|The computer win with: pair!
