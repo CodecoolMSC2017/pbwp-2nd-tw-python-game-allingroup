@@ -370,18 +370,6 @@ def change(hand):
                     if int(h) + 1 == int(n):
                         hand[h] = newcards[current]
                         current += 1
-
-            """for h in range(len(hand)):
-                for n in numlist:
-                    print("h" + str(h) + "n" + str(n) + "current" + str(current))
-                    if int(h) + 1 == int(n):
-                        changelist.append(newcards[current])
-                current += 1
-            for i in range (len(hand)):
-                for n in range(len(numlist)):
-                    if i == numlist[n]:
-                        print("i: " + str(i) + " numlist[n] " + str(numlist[n]))"""
-                    
             return hand
     else:
         print(notgoodmsg)
