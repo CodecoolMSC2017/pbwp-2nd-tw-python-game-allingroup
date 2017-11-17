@@ -153,7 +153,7 @@ def newhand(x):
     hand = []
     while len(hand) < x:
         val = len(pack) - 1
-        card = random.randint(0, val)
+        card = random.randint(1, val)
         hand.append(pack[card][0])
         pack.remove(pack[card])
     return hand
