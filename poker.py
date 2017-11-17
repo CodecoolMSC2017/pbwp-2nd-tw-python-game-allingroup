@@ -157,16 +157,6 @@ def clrscr():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
-# change cards if user wants
-def changecards(change):
-    if change >= '1':
-        change = len(change)
-    else:
-        pass
-    newcards = newhand(change)
-    return newcards
-
-
 # get card from list by its num
 def getcardval(hand):
     c = 0
@@ -371,14 +361,27 @@ def change(hand):
             for c in range(changenum):
                 cardnum = input(askforcard)
                 numlist.append(cardnum)
+            current = 0
+            newcards = newhand(changenum)
+            changelist = []
+            current = 0
+            for h in range(len(hand)):
+                for n in numlist:
+                    if int(h) + 1 == int(n):
+                        hand[h] = newcards[current]
+                        current += 1
 
-            current = 1
-            for g in hand:
-                for num in numlist:
-                    if current == num:
-                        hand[current - 1] = c
+            """for h in range(len(hand)):
+                for n in numlist:
+                    print("h" + str(h) + "n" + str(n) + "current" + str(current))
+                    if int(h) + 1 == int(n):
+                        changelist.append(newcards[current])
                 current += 1
-
+            for i in range (len(hand)):
+                for n in range(len(numlist)):
+                    if i == numlist[n]:
+                        print("i: " + str(i) + " numlist[n] " + str(numlist[n]))"""
+                    
             return hand
     else:
         print(notgoodmsg)
@@ -440,7 +443,7 @@ def game(userdata):
 
     if canplay:
         replaymsg = "Do you wanna play another game?\n"
-        options = "n - new game\n f - finish game\n"
+        options = "n - new game\nf - finish game\n"
         clrscr()
         poker()
         guesthand = newhand(5)
@@ -460,8 +463,8 @@ def game(userdata):
         # make string from cards list
         gh = makesimple(guesthand)
 
-        clrscr()
-        poker()
+        #clrscr()
+        #poker()
 
         print("now, your cards are:\n")
         print(gh + "\n")
