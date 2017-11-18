@@ -151,11 +151,15 @@ def checkinput(userinput):
 # remove choosen card from pack
 def newhand(x):
     hand = []
+    cardoptions = len(pack) - 1
+    print("all" + str(cardoptions))
     while len(hand) < x:
-        val = len(pack) - 1
+        val = cardoptions
+        print(val)
         card = random.randint(1, val)
         hand.append(pack[card][0])
         pack.remove(pack[card])
+        cardoptions -= 1
     return hand
 
 
@@ -195,7 +199,7 @@ def four_of_kind(hand):
     N = len(hand)
     four_is = []
     while j < N - 3:
-        if hand[j] == hand[j+1] and hand[j+1] == hand[j+2] and hand[j+2] == hand[j+3]:
+        if hand[j] == hand[j+3]:
             four_is = [True, hand[j]]
             break
         else:
@@ -250,10 +254,7 @@ def analyze(hand):
     for i in range(len(hand)):
         hand[i] = int(hand[i])
     hand = sorted(hand)
-    for i in range(len(hand)):
-        hand[i] = str(hand[i])
     res = 0
-
     straight_true = straight(hand)
     pair_true = pair(hand)
     drill_true = drill(hand)
@@ -368,7 +369,6 @@ def change(hand):
             for c in range(changenum):
                 cardnum = input(askforcard)
                 numlist.append(cardnum)
-            current = 0
             newcards = newhand(changenum)
             changelist = []
             current = 0
@@ -512,9 +512,13 @@ def game(userdata):
             main(restart=1)
         elif newgame == "f":
             main()
+        else:
+            print("Wrong answer!")
+            sleep(1)
+            main()
     else:
         print("You don't have enough money to play!")
-        print("Bit if you can't stop playing you can make a new user")
+        print("But if you can't stop playing you can make a new user")
         sleep(5)
         main()
 
@@ -528,7 +532,7 @@ def main(restart=0):
     if restart == 0:
         print("MENU")
         print("Choose an option and press enter")
-        inputmsg = "s - start,\nr - result,\nn - new user,\nq - quit\n"
+        inputmsg = "s - start\nr - result\nn - new user\nq - quit\n"
         keys = input(inputmsg)
         if keys == "s":
             game(user)
