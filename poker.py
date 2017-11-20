@@ -152,10 +152,8 @@ def checkinput(userinput):
 def newhand(x):
     hand = []
     cardoptions = len(pack) - 1
-    print("all" + str(cardoptions))
     while len(hand) < x:
         val = cardoptions
-        print(val)
         card = random.randint(1, val)
         hand.append(pack[card][0])
         pack.remove(pack[card])
