@@ -1,5 +1,4 @@
 import random
-from time import sleep
 import os
 import datetime
 import itertools
@@ -106,23 +105,6 @@ cardvals = {
     'A': '14'
 }
 
-
-# pack of cards
-"""pack = [
-    ['2', 'club'], ['2', 'diamond'], ['2', 'heart'], ['2', 'spade'],
-    ['3', 'club'], ['3', 'diamond'], ['3', 'heart'], ['3', 'spade'],
-    ['4', 'club'], ['4', 'diamond'], ['4', 'heart'], ['4', 'spade'],
-    ['5', 'club'], ['5', 'diamond'], ['5', 'heart'], ['5', 'spade'],
-    ['6', 'club'], ['6', 'diamond'], ['6', 'heart'], ['6', 'spade'],
-    ['7', 'club'], ['7', 'diamond'], ['7', 'heart'], ['7', 'spade'],
-    ['8', 'club'], ['8', 'diamond'], ['8', 'heart'], ['8', 'spade'],
-    ['9', 'club'], ['9', 'diamond'], ['9', 'heart'], ['9', 'spade'],
-    ['10', 'club'], ['10', 'diamond'], ['10', 'heart'], ['10', 'spade'],
-    ['J', 'club'], ['J', 'diamond'], ['J', 'heart'], ['J', 'spade'],
-    ['Q', 'club'], ['Q', 'diamond'], ['Q', 'heart'], ['Q', 'spade'],
-    ['K', 'club'], ['K', 'diamond'], ['K', 'heart'], ['K', 'spade'],
-    ['A', 'club'], ['A', 'diamond'], ['A', 'heart'], ['A', 'spade']
-]"""
 
 prizecard = """
              @@@
@@ -535,7 +517,7 @@ def game(userdata):
         writeresults(guestval, winner)
         userdatas = username + " " + str(usertoken) + " " + str(pot)
         writedata(userdatas)
-        sleep(1)
+        time.sleep(1)
         print("\n" + winner)
 
         newgame = input("\n" + replaymsg + options)
@@ -545,12 +527,12 @@ def game(userdata):
             main()
         else:
             print("Wrong answer!")
-            sleep(1)
+            time.sleep(1)
             main()
     else:
         print("You don't have enough money to play!")
         print("But if you can't stop playing you can make a new user")
-        sleep(5)
+        time.sleep(5)
         main()
 
 
