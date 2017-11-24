@@ -197,7 +197,7 @@ def four_of_kind(hand):
     N = len(hand)
     four_is = []
     while j < N - 3:
-        if hand[j] == hand[j+3]:
+        if hand[j] == hand[j+1] and hand[j+1] == hand[j+2] and hand[j+2] == hand[j+3]:
             four_is = [True, hand[j]]
             break
         else:
