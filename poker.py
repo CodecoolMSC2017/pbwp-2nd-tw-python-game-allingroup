@@ -146,31 +146,30 @@ def checkinput(userinput):
         return False
 
 
-def read_pack()
+def read_pack():
     with open("pack.txt", "r") as pack:
         packtxt = pack.readlines()
     thepack = []
     for i in range(len(packtxt)):
-        thepack.append(packtxt[i])
+        thepack.append(packtxt[i].strip().split(","))
+
     return thepack
 
-print(read_pack)
 # choose x random card from the pack
 # append cards to hand
 # remove choosen card from pack
-def newhand(x, hand=0):
+def newhand(x, package, hand=0):
     hand = []
-
-    if len(pack) - 1 <= x:
-
-    cardoptions = len(pack) - 1
+    
+    if len(package) - 1 <= x:
+        package = read_pack()
+    cardoptions = len(package) - 1
     while len(hand) < x:
-        print(len(pack))
         card = random.randint(1, cardoptions)
-        hand.append(pack[card][0])
-        pack.remove(pack[card])
+        hand.append(package[card][0])
+        package.remove(package[card])
         cardoptions -= 1
-    return hand
+    return [hand, package]
 
 
 # make terminal clear
@@ -195,12 +194,19 @@ def straight(hand):
     maxcard = max(hand)
     mincard = min(hand)
     handlen = len(hand)
-    high_is = []
+    
     if int(maxcard) - int(mincard) == 4 and handlen == 5:
-        high_is = [True, maxcard]
+        pair_check = pair(hand)
+        drill_check = drill(hand)
+        four_check = four_of_kind(hand)
+        if pair_check[0] or drill_check[0] or four_check[0]:
+            straight_is = [False, 0]
+        else:
+            straight_is = [True, maxcard]
+
     else:
-        high_is = [False, 0]
-    return high_is
+        straight_is = [False, 0]
+    return straight_is
 
 
 # check if four of kind
@@ -337,14 +343,14 @@ def printresults(noresmsg):
 
 # check result.txt
 def result():
-    #clrscr()
+    clrscr()
     poker()
     noresmsg = "Play with our poker and you will see your results here"
     try:
         printresults(noresmsg)
     except:
         print(noresmsg)
-    #clrscr()
+    clrscr()
     poker()
 
 
@@ -358,7 +364,7 @@ def makesimple(cardlist):
 # ask how many cards user wanna change
 # change hand with new cards
 # return hand
-def change(hand):
+def change(hand, package):
     msg = "How many cards you wanna change? (max 3)\n"
     notgoodnummsg = "Try again with a number between 1 and 3\n"
     askforcard = "Which number you wanna change?\n"
@@ -379,34 +385,42 @@ def change(hand):
             for c in range(changenum):
                 cardnum = input(askforcard)
                 numlist.append(cardnum)
-            newcards = newhand(changenum)
+            result = newhand(changenum, package)
+            newcards = result[0]
+            package = result[1]
             changelist = []
             current = 0
             for h in range(len(hand)):
                 for n in numlist:
                     if int(h) + 1 == int(n):
                         hand[h] = newcards[current]
+
+                        print(hand[h])
                         current += 1
-            return hand
+            return [hand, package]
     else:
         print(notgoodmsg)
-        change(hand)
+        change(hand, package)
 
 
 # if user wanna change cards, ask for nums of the cards, and change it
-def askforchange(hand):
+def askforchange(hand, package):
     question = "\nWhat you wanna do?\n"
     options = "\n k - keep cards\n c - change cards\n n - newhand\n"
     option = input(question + options)
     if option == "c":
-        hand = change(hand)
+        result = change(hand, package)
+        hand = result[0]
+        package = result[1]
     elif option == "n":
-        hand = newhand(5)
+        result = newhand(5, package)
+        hand = result[0]
+        package = result[1]
     elif option == "k":
         hand = hand
     else:
-        askforchange(hand)
-    return hand
+        askforchange(hand, package)
+    return [hand, package]
 
 
 # write result to txt
@@ -430,6 +444,7 @@ def table():
 
 # get the hands, analyze and says who's the winner
 def game(userdata):
+    pack = read_pack()
     modemsg = "\nChoose how hardcore are you:"
     modeoptions = "\nb - beginner\np - pro\n"
     user = userdata.split(" ")
@@ -462,10 +477,14 @@ def game(userdata):
     if canplay:
         replaymsg = "Do you wanna play another game?\n"
         options = "n - new game\nf - finish game\n"
-        #clrscr()
+        clrscr()
         poker()
-        guesthand = newhand(5)
-        pchand = newhand(5)
+        result = newhand(5, pack)
+        guesthand = result[0]
+        pack = result[1]
+        result = newhand(5, pack)
+        pchand = result[0]
+        pack = result[1]
 
         # make string from cards list
         gh = makesimple(guesthand)
@@ -477,12 +496,14 @@ def game(userdata):
         print("Your cards are:\n")
         print(gh)
 
-        guesthand = askforchange(guesthand)
+        result = askforchange(guesthand, pack)
+        guesthand = result[0]
+        pack = result[1]
 
         # make string from cards list
         gh = makesimple(guesthand)
 
-        #clrscr()
+        clrscr()
         poker()
 
         print("now, your cards are:\n")
