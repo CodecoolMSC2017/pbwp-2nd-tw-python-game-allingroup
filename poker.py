@@ -108,7 +108,7 @@ cardvals = {
 
 
 # pack of cards
-pack = [
+"""pack = [
     ['2', 'club'], ['2', 'diamond'], ['2', 'heart'], ['2', 'spade'],
     ['3', 'club'], ['3', 'diamond'], ['3', 'heart'], ['3', 'spade'],
     ['4', 'club'], ['4', 'diamond'], ['4', 'heart'], ['4', 'spade'],
@@ -122,7 +122,7 @@ pack = [
     ['Q', 'club'], ['Q', 'diamond'], ['Q', 'heart'], ['Q', 'spade'],
     ['K', 'club'], ['K', 'diamond'], ['K', 'heart'], ['K', 'spade'],
     ['A', 'club'], ['A', 'diamond'], ['A', 'heart'], ['A', 'spade']
-]
+]"""
 
 prizecard = """
              @@@
@@ -146,15 +146,27 @@ def checkinput(userinput):
         return False
 
 
+def read_pack()
+    with open("pack.txt", "r") as pack:
+        packtxt = pack.readlines()
+    thepack = []
+    for i in range(len(packtxt)):
+        thepack.append(packtxt[i])
+    return thepack
+
+print(read_pack)
 # choose x random card from the pack
 # append cards to hand
 # remove choosen card from pack
-def newhand(x):
+def newhand(x, hand=0):
     hand = []
+
+    if len(pack) - 1 <= x:
+
     cardoptions = len(pack) - 1
     while len(hand) < x:
-        val = cardoptions
-        card = random.randint(1, val)
+        print(len(pack))
+        card = random.randint(1, cardoptions)
         hand.append(pack[card][0])
         pack.remove(pack[card])
         cardoptions -= 1
@@ -325,14 +337,14 @@ def printresults(noresmsg):
 
 # check result.txt
 def result():
-    clrscr()
+    #clrscr()
     poker()
     noresmsg = "Play with our poker and you will see your results here"
     try:
         printresults(noresmsg)
     except:
         print(noresmsg)
-    clrscr()
+    #clrscr()
     poker()
 
 
@@ -450,7 +462,7 @@ def game(userdata):
     if canplay:
         replaymsg = "Do you wanna play another game?\n"
         options = "n - new game\nf - finish game\n"
-        clrscr()
+        #clrscr()
         poker()
         guesthand = newhand(5)
         pchand = newhand(5)
@@ -470,7 +482,7 @@ def game(userdata):
         # make string from cards list
         gh = makesimple(guesthand)
 
-        clrscr()
+        #clrscr()
         poker()
 
         print("now, your cards are:\n")
